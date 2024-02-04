@@ -35,4 +35,6 @@ object Graph {
     const val ADDM = "add_graph"
     const val DOC = "doc_graph"
     const val PAT = "pat_graph"
+    const val ACTIVE = "active_graph"
+
 }

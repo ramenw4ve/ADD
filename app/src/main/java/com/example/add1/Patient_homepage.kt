@@ -30,10 +30,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.Font
+import androidx.navigation.NavHostController
+import com.example.add1.graphs.activescreen
 
 
 @Composable
-fun User_home_page(toke: String) {
+fun User_home_page(toke: String,navController: NavHostController) {
     val fontFamily = FontFamily(
         Font(R.font.jost_semibold, FontWeight.SemiBold)
     )
@@ -145,7 +147,9 @@ fun User_home_page(toke: String) {
                         fontWeight = FontWeight.SemiBold,
                         modifier = Modifier
                             .padding(top = 155.dp)
-                            .clickable { }
+                            .clickable {
+                                navController.navigate(activescreen.viewactive.route)
+                            }
                     )
 
 
@@ -154,15 +158,17 @@ fun User_home_page(toke: String) {
             }
 
 
-            Image(
-                painter = painterResource(id = R.drawable.generate_qr),
-                contentDescription = null,
-                contentScale = ContentScale.FillBounds,
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .offset(y = -60.dp)
-                    .clickable { }
-            )
+//            Image(
+//                painter = painterResource(id = R.drawable.generate_qr),
+//                contentDescription = null,
+//                contentScale = ContentScale.FillBounds,
+//                modifier = Modifier
+//                    .align(Alignment.BottomCenter)
+//                    .offset(y = -60.dp)
+//                    .clickable {
+//
+//                    }
+//            )
         }
 
     }

@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.add1.BottomBarScreen
 import com.example.add1.User_home_page
+import com.example.add1.User_prescriptions
 import com.example.add1.User_profile_Screen
 import com.example.add1.User_self_prescription
 import com.example.add1.ViewCart
@@ -20,7 +21,7 @@ fun HomeNavGraph(navController: NavHostController,token:String) {
         startDestination = BottomBarScreen.Home.route
     ) {
         composable(route = BottomBarScreen.Home.route) {
-            User_home_page( token )
+            User_home_page( token, navController = navController)
         }
         composable(route = BottomBarScreen.SelfP.route) {
             User_self_prescription(navController = navController)
@@ -29,6 +30,7 @@ fun HomeNavGraph(navController: NavHostController,token:String) {
             User_profile_Screen(token)
         }
         selfpNavGraph(navController = navController)
+        activepNavGraph(navController = navController)
     }
 }
 
@@ -53,7 +55,32 @@ fun NavGraphBuilder.selfpNavGraph(navController: NavHostController) {
     }
 }
 
+fun NavGraphBuilder.activepNavGraph(navController: NavHostController) {
+    navigation(
+        route = Graph.ACTIVE,
+        startDestination = activescreen.viewactive.route
+    ) {
+//        composable(route = selfpscreen.selfpre.route) {
+//            User_self_prescription(navController = navController)
+//        }
+        composable(route = activescreen.viewactive.route) {
+//            ScreenContent(name = selfpscreen.viewcart.route) {
+//                navController.popBackStack(
+//                    route = selfpscreen.selfpre.route,
+//                    inclusive = false
+//                )
+//            }
+            User_prescriptions()
+
+        }
+    }
+}
+
 sealed class selfpscreen(val route: String) {
     object selfpre : selfpscreen(route = "SELFPRESCRIBE")
     object viewcart : selfpscreen(route = "VIEWCART")
+}
+sealed class activescreen(val route: String) {
+    object viewactive : selfpscreen(route = "VIEWACTIVE")
+//    object viewcart : selfpscreen(route = "VIEWCART")
 }

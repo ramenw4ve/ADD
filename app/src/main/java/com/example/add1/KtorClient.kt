@@ -24,7 +24,7 @@ import kotlinx.serialization.json.JsonElement
 
 class KtorClient {
     private val client = HttpClient(OkHttp) {
-        defaultRequest { url("http://192.168.0.105:7000/") }
+        defaultRequest { url("http://10.0.0.144:7000/") }
 
         install(Logging) {
             logger = Logger.SIMPLE
@@ -206,8 +206,11 @@ data class GPatient(
 data class HPatient(
     val doctorName: String = "Doctor0",
     val numberOfMedicines: Int = 69,
-    val Medicines: List<JsonElement>
+    val Medicines: List<IMedicine>
 )
+
+
+
 
 @Serializable
 data class SPatient(
@@ -227,6 +230,21 @@ data class Medicine(
     val mg: String,
     val quantity: String
 )
+@Serializable
+data class ViewQR(
+    val message: String,
+    val qrData: String
+)
+
+@Serializable
+data class IMedicine(
+    val Medicine_name: String,
+    val mg: Int,
+    val quantity: Int,
+    val price: Int,
+    val _id:String
+)
+
 
 @Serializable
 data class Goblet(

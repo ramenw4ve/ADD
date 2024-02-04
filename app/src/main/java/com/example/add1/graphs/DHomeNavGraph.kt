@@ -73,7 +73,7 @@ fun NavGraphBuilder.addmNavGraph(navController: NavHostController) {
 //            }
             backStackEntry ->
             val patientId = backStackEntry.arguments?.getInt("patientId")
-//            AddMedicine(patid = patientId!!) // Ensure patientId is not null
+            AddMedicine(patid = patientId!!) // Ensure patientId is not null
 
         }
     }

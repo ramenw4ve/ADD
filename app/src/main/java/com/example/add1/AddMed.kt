@@ -47,9 +47,9 @@ import com.example.add1.graphs.Graph
 @Composable
 fun AddMedicine(
     modifier: Modifier = Modifier,
-//                patid:Int
+                patid:Int
 ) {
-    var patid = 248480
+//    var patid = 248480
     val fontFamily = FontFamily(
         Font(R.font.jost_semibold, FontWeight.SemiBold)
     )
@@ -316,7 +316,7 @@ fun AddMedicine(
                             LaunchedEffect(key1 = shouldaddMedicine) {
                                 if (shouldaddMedicine) {
                                     toke =
-                                        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWIxZTY0YWU2OWYwZGUyNWM1MmExYjAiLCJpYXQiOjE3MDY0NDg4MTgsImV4cCI6MTcwNjQ1MjQxOH0.ew3ZfiBmPI0L_qipvNS_HnYZ9fLu2opJjp_vul7KUmE"
+                                        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWIxZTY0YWU2OWYwZGUyNWM1MmExYjAiLCJpYXQiOjE3MDY5NDAwODgsImV4cCI6MTcwNjk0MzY4OH0.U95LMr6zgNxl50XqhbZWFgMeCvplYL18kYCKuB4C2tM"
                                     resp = ktorClient.postMeds("248480", am, toke)
 
                                     snackbarHostState.showSnackbar(
