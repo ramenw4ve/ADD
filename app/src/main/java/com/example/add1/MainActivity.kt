@@ -4,12 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.*
+import androidx.navigation.compose.rememberNavController
+import com.example.add1.graphs.RootNavigationGraph
 
 //import com.example.add1.Character
 //import io.ktor.client.headers.*
 
 
-val LocalToke = staticCompositionLocalOf<String?> { null }
+//val LocalToke = staticCompositionLocalOf<String?> { null }
 class MainActivity : ComponentActivity() {
 
     private val ktorClient = KtorClient()
@@ -19,10 +21,11 @@ class MainActivity : ComponentActivity() {
         setContent {
 //User_home_page(toke = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWFkMjBjNjMwODJmMWE1MjFiYzRjOWEiLCJpYXQiOjE3MDU5OTEzMzQsImV4cCI6MTcwNTk5NDkzNH0.u4UtO6-cu_1bnZLCpmOlgnaQGy88t3XP3w_tQXOmzVY")
 //                User_self_prescription(navController = rememberNavController())
-//                RootNavigationGraph(navController = rememberNavController())
+                RootNavigationGraph(navController = rememberNavController())
+//User_payment()
 //            AddMedicine()
 //            User_prescriptions()
-                PatViewQR()
+//                PatViewQR(toke = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWFkMjBjNjMwODJmMWE1MjFiYzRjOWEiLCJpYXQiOjE3MDcwOTYyMTIsImV4cCI6MTcwNzExNDIxMn0.OAcC6aNWLpOyPVnaGhGBtZYbMHlZv9zY8gAkMPtdJOw")
 //            NavHost(navController = navController, startDestination = "psu") {
 //                composable("psu") {
 //                    User_signup(navController = navController)

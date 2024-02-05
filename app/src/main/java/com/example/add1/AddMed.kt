@@ -316,7 +316,7 @@ fun AddMedicine(
                             LaunchedEffect(key1 = shouldaddMedicine) {
                                 if (shouldaddMedicine) {
                                     toke =
-                                        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWIxZTY0YWU2OWYwZGUyNWM1MmExYjAiLCJpYXQiOjE3MDY5NDAwODgsImV4cCI6MTcwNjk0MzY4OH0.U95LMr6zgNxl50XqhbZWFgMeCvplYL18kYCKuB4C2tM"
+                                        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWIxZTY0YWU2OWYwZGUyNWM1MmExYjAiLCJpYXQiOjE3MDcwNDE1MjksImV4cCI6MTcwNzA0NTEyOX0.b2iDvF5nhGGhF_NGYYWhlg3_R1QKEErOXXuO5S3bDCU"
                                     resp = ktorClient.postMeds("248480", am, toke)
 
                                     snackbarHostState.showSnackbar(

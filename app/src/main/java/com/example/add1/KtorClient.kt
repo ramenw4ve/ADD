@@ -13,18 +13,23 @@ import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
+import io.ktor.client.statement.HttpResponse
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
+import io.ktor.http.isSuccess
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
-
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 class KtorClient {
     private val client = HttpClient(OkHttp) {
-        defaultRequest { url("http://10.0.0.144:7000/") }
+        defaultRequest { url("http://10.0.0.162:7000/") }
 
         install(Logging) {
             logger = Logger.SIMPLE
@@ -113,7 +118,28 @@ class KtorClient {
 
         return request.body()
     }
+    suspend fun getQR(end: String): ViewQR {
 
+
+
+        val request = client.get("/patient/viewDocPrescription/$end")
+
+        return request.body()
+    }
+
+//    suspend fun getQR(end: String): ViewQR {
+//        return withContext(Dispatchers.IO) {  // Switch to IO dispatcher for network calls
+//            val response: HttpResponse = client.get("/patient/viewDocPrescription/$end")
+////                .await()  // Await the response
+//
+//            if (response.status.isSuccess()) {
+//                response.body<ViewQR>() // Parse response body as ViewQR
+//            } else {
+//                // Handle error cases appropriately
+//                throw Exception("Failed to get QR data: ${response.status}")  // Example handling
+//            }
+//        }
+//    }
 
     suspend fun postPatient(end: String, pat: Patient): String? {
 
