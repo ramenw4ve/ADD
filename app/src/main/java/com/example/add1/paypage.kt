@@ -34,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.HorizontalAlignmentLine
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -47,7 +48,7 @@ import com.example.add1.graphs.activescreen
 @Composable
 fun User_payment(
     navController: NavHostController,
-    toke:String
+    toke: String
 ) {
 
     val ktorClient = KtorClient()
@@ -89,48 +90,100 @@ fun User_payment(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.SpaceEvenly
             ) {
-                
-                Row(modifier = Modifier.fillMaxWidth(),
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                   Text(text = "Medicines",
-                       fontSize = 20.sp,
-                       color = Color.Black,
-                       fontFamily = fontFamilyjs,
-                       fontWeight = FontWeight.SemiBold)
-                   Text(text = "Quantity",
-                       fontSize = 20.sp,
-                       color = Color.Black,
-                       fontFamily = fontFamilyjs,
-                       fontWeight = FontWeight.SemiBold)
-                   Text(text = "Price",fontSize = 20.sp,
-                       color = Color.Black,
-                       fontFamily = fontFamilyjs,
-                       fontWeight = FontWeight.SemiBold)
-                }
+                    Text(
+                        text = "Medicines",
+                        fontSize = 24.sp,
+                        color = Color.Black,
+                        fontFamily = fontFamilyjs,
+                        fontWeight = FontWeight.SemiBold,
+                        modifier = Modifier
+                            .weight(0.5f)
+//                            .background(Color.Cyan)
+                            .offset(x = 30.dp)
 
-                LazyRow(modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly) {
+                    )
+
+                Row(modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(0.5f)
+//                    .background(Color.LightGray)
+                    ,
+                    horizontalArrangement = Arrangement.SpaceEvenly)
+                {
+                    Text(
+                        text = "Quantity",
+                        fontSize = 24.sp,
+                        color = Color.Black,
+                        fontFamily = fontFamilyjs,
+                        fontWeight = FontWeight.SemiBold,
+                        modifier = Modifier
+                            .offset(x = -10.dp)
+//                            .weight(0.25f)
+//                            .background(Color.LightGray)
+                    )
+
+                    Text(
+                        text = "Price", fontSize = 24.sp,
+                        color = Color.Black,
+                        fontFamily = fontFamilyjs,
+                        fontWeight = FontWeight.SemiBold,
+                        modifier = Modifier
+//                            .weight(0.25f)
+//                            .background(Color.Green)
+//                            .offset(x = 20.dp)
+
+                    )
+                }
+            }
+                LazyRow(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
                     patH?.let {
                         items(it.Medicines) { med ->
-                            Text(
-                                text = "${med.Medicine_name}",
-                                fontSize = 18.sp,
-                                fontFamily = fontFamilyjs, fontWeight = FontWeight.SemiBold,
-                                modifier = Modifier.offset(x = 0.dp)
-                            )
-                            Spacer(modifier = Modifier.width(15.dp))
-                            Text(
-                                text = "${med.quantity}",
-                                fontSize = 18.sp,
-                                fontFamily = fontFamilyjs, fontWeight = FontWeight.SemiBold
-                            )
-                            Spacer(modifier = Modifier.width(15.dp))
-                            Text(
-                                text = "${med.price}",
-                                fontSize = 18.sp,
-                                fontFamily = fontFamilyjs, fontWeight = FontWeight.SemiBold
-                            )
+                            Row(modifier = Modifier.fillParentMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceEvenly) {
+                                Text(
+                                    text = med.Medicine_name,
+                                    fontSize = 18.sp,
+                                    fontFamily = fontFamilyjs, fontWeight = FontWeight.SemiBold,
+                                    modifier = Modifier
+                                    .weight(0.5f)
+                                    .offset(x = 50.dp)
+
+
+                                )
+
+                                Row(modifier = Modifier
+                                    .weight(0.5f)
+//                                    .background(Color.Cyan),
+                                    ,horizontalArrangement = Arrangement.SpaceEvenly
+                                ) {
+                                    Text(
+                                        text = "${med.quantity}",
+                                        fontSize = 18.sp,
+                                        fontFamily = fontFamilyjs, fontWeight = FontWeight.SemiBold,
+                                        modifier = Modifier.offset(x = 0.dp)
+
+                                    )
+//                            Spacer(modifier = Modifier.width(15.dp))
+                                    Text(
+                                        text = "${med.price}",
+                                        fontSize = 18.sp,
+                                        fontFamily = fontFamilyjs, fontWeight = FontWeight.SemiBold,
+                                        modifier = Modifier.offset(x = 20.dp)
+
+                                    )
+                                }
+                            }
+
+//                            Spacer(modifier = Modifier.width(15.dp))
+
 
                             Spacer(modifier = Modifier.height(20.dp))
                         }
@@ -141,7 +194,8 @@ fun User_payment(
 
 
 
-                Image(painter = painterResource(id = R.drawable.upi),
+                Image(
+                    painter = painterResource(id = R.drawable.upi),
                     contentDescription = null,
                     modifier = Modifier
                         .offset(y = 150.dp)

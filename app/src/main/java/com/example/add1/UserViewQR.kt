@@ -114,25 +114,58 @@ fun PatViewQR(toke:String) {
                 contentScale = ContentScale.FillBounds
             )
             var re = listOf(1,2,3)
-            Text("Doctor name: ${patH?.doctorName}",modifier = Modifier.offset(y = -280.dp))
+            Text("Doctor name: ${patH?.doctorName}"
+                ,modifier = Modifier.offset(y = -280.dp)
+            , fontSize = 22.sp,
+                fontFamily  =fontFamily,
+                fontWeight = FontWeight.SemiBold)
+            Column(verticalArrangement = Arrangement.SpaceEvenly) {
 
-            if (imageBitmap != null) {
-                Image(
-                    bitmap = imageBitmap,
-                    contentDescription = "Image from Base64",
-                    modifier = Modifier.size(200.dp).offset(y = -100.dp)
-                )
-            }
 
-            LazyColumn(modifier  = Modifier.offset(y = 80.dp)) {
-                patH?.let {
-                    items(it.Medicines){ med ->
-                        Text(text = "Medicine Name: ${med.Medicine_name}")
-                        Text(text = "mg: ${med.mg}")
-                        Text(text = "quantity: ${med.quantity}")
+                if (imageBitmap != null) {
+                    Image(
+                        bitmap = imageBitmap,
+                        contentDescription = "Image from Base64",
+                        modifier = Modifier
+                            .size(220.dp)
+                            .offset(y = -50.dp)
+                    )
+                }
 
-                        Spacer(modifier = Modifier.height(20.dp))
+//            LazyColumn(modifier  = Modifier.offset(y = 80.dp)) {
+//                patH?.let {
+//                    items(it.Medicines){ med ->
+//                        Text(text = "Medicine Name: ${med.Medicine_name}")
+//                        Text(text = "mg: ${med.mg}")
+//                        Text(text = "quantity: ${med.quantity}")
+//
+//                        Spacer(modifier = Modifier.height(20.dp))
+//                    }
+//                }
+//            }
+                LazyColumn {
+                    patH?.let {
+                        items(it.Medicines) { med ->
+                            Text(
+                                text = "Medicine Name: ${med.Medicine_name}",
+                                fontSize = 18.sp,
+                                fontFamily = fontFamily, fontWeight = FontWeight.SemiBold
+                            )
+                            Text(
+                                text = "mg: ${med.mg}",
+                                fontSize = 18.sp,
+                                fontFamily = fontFamily, fontWeight = FontWeight.SemiBold
+                            )
+                            Text(
+                                text = "quantity: ${med.quantity}",
+                                fontSize = 18.sp,
+                                fontFamily = fontFamily, fontWeight = FontWeight.SemiBold
+                            )
+
+                            Spacer(modifier = Modifier.height(20.dp))
+                        }
                     }
+
                 }
             }
         }

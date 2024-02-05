@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.*
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.add1.graphs.RootNavigationGraph
 
@@ -22,7 +23,7 @@ class MainActivity : ComponentActivity() {
 //User_home_page(toke = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWFkMjBjNjMwODJmMWE1MjFiYzRjOWEiLCJpYXQiOjE3MDU5OTEzMzQsImV4cCI6MTcwNTk5NDkzNH0.u4UtO6-cu_1bnZLCpmOlgnaQGy88t3XP3w_tQXOmzVY")
 //                User_self_prescription(navController = rememberNavController())
                 RootNavigationGraph(navController = rememberNavController())
-//User_payment()
+//User_payment(toke = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWFkMjBjNjMwODJmMWE1MjFiYzRjOWEiLCJpYXQiOjE3MDcxNDU4MjgsImV4cCI6MTcwNzE2MzgyOH0.PRIlRVgMWDsZfnzS4eLpMGNdtVMn03mU-Ixo3DxZreo")
 //            AddMedicine()
 //            User_prescriptions()
 //                PatViewQR(toke = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWFkMjBjNjMwODJmMWE1MjFiYzRjOWEiLCJpYXQiOjE3MDcwOTYyMTIsImV4cCI6MTcwNzExNDIxMn0.OAcC6aNWLpOyPVnaGhGBtZYbMHlZv9zY8gAkMPtdJOw")

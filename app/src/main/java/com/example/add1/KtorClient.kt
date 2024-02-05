@@ -29,7 +29,7 @@ import kotlinx.coroutines.launch
 
 class KtorClient {
     private val client = HttpClient(OkHttp) {
-        defaultRequest { url("http://10.0.0.162:7000/") }
+        defaultRequest { url("http://192.168.0.105:7000/") }
 
         install(Logging) {
             logger = Logger.SIMPLE
