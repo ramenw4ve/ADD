@@ -98,7 +98,7 @@ fun AddMedicine(
     val medicine5 = Tablet(
         name = remember { mutableStateOf("") },
         mg = remember { mutableStateOf("") },
-        quantity = remember { mutableStateOf("") }
+        quantity = remember { mutableStateOf(0) }
     )
 //
 //
@@ -296,7 +296,7 @@ fun AddMedicine(
                         Medicine(
                             name = it.name.value,
                             mg = it.mg.value,
-                            quantity = it.quantity.value
+                            quantity = it.quantity.value.toString()
                         )
                     }
 

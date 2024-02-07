@@ -55,10 +55,18 @@ fun PatViewQR(toke:String) {
 //    var toke = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWFkMjBjNjMwODJmMWE1MjFiYzRjOWEiLCJpYXQiOjE3MDY5NDUzNjksImV4cCI6MTcwNjk0ODk2OX0.YjVx5aMrL8SzWaim4zD_o5rYADj5aGXJRC2vNmGYc1w"
 
     LaunchedEffect(key1 = Unit) {
-        qr = ktorClient.getQR("65bf63d99824b7695ef581a2")
-
         patH = ktorClient.getHPatient("home", toke.toString())
 
+    }
+
+    if(patH != null) {
+
+        val objid = patH?._id
+
+        LaunchedEffect(key1 = Unit) {
+            qr = objid?.let { ktorClient.getQR(it) }
+
+        }
     }
 
 
@@ -89,7 +97,8 @@ fun PatViewQR(toke:String) {
     Column (
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color(0xFFFF9C9F)),
+            .background(color = Color(0xFFFF9C9F))
+            .offset(y = -25.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceAround
     ){

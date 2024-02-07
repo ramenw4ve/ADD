@@ -85,6 +85,25 @@ class KtorClient {
             return "Added Successfully"
         }
     }
+    suspend fun postSelfMeds(end: String, medicines: AMedicines, accesstoken: String): String {
+
+        val response = client.post("/patient/$end") {
+            header("Authorization", "Bearer $accesstoken")
+            contentType(ContentType.Application.Json)
+            setBody(medicines)
+        }
+
+        if (response.status != HttpStatusCode(200, "OK")) {
+            val parsedErrorResponse: Map<String, String> = Json.decodeFromString(response.body())
+            val errorMessage = parsedErrorResponse["message"]
+
+            return errorMessage.toString()
+        } else {
+
+
+            return "Added Successfully"
+        }
+    }
 
     suspend fun getSPatient(end: String): SPatient {
 
@@ -232,7 +251,8 @@ data class GPatient(
 data class HPatient(
     val doctorName: String = "Doctor0",
     val numberOfMedicines: Int = 69,
-    val Medicines: List<IMedicine>
+    val Medicines: List<IMedicine>,
+    val _id:String
 )
 
 
@@ -272,18 +292,18 @@ data class IMedicine(
 )
 
 
-@Serializable
-data class Goblet(
-    val name: MutableState<String>,
-    val mg: MutableState<String>,
-    val quantity: MutableState<String>
-)
+//@Serializable
+//data class Goblet(
+//    val name: MutableState<String>,
+//    val mg: MutableState<String>,
+//    val quantity: MutableState<String>
+//)
 
 @Serializable
 data class Tablet(
     val name: MutableState<String>,
     val mg: MutableState<String>,
-    val quantity: MutableState<String>
+    val quantity: MutableState<Int>
 )
 
 //@Serializable

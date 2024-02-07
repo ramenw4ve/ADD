@@ -27,31 +27,31 @@ fun Tabloader(modifier: Modifier = Modifier, maxmeds: Int): List<Tablet> {
     val medicine1 = Tablet(
         name = remember { mutableStateOf("") },
         mg = remember { mutableStateOf("") },
-        quantity = remember { mutableStateOf("") }
+        quantity = remember { mutableStateOf(0) }
     )
 
     val medicine2 = Tablet(
         name = remember { mutableStateOf("") },
         mg = remember { mutableStateOf("") },
-        quantity = remember { mutableStateOf("") }
+        quantity = remember { mutableStateOf(0) }
     )
 
     val medicine3 = Tablet(
         name = remember { mutableStateOf("") },
         mg = remember { mutableStateOf("") },
-        quantity = remember { mutableStateOf("") }
+        quantity = remember { mutableStateOf(0) }
     )
 
     val medicine4 = Tablet(
         name = remember { mutableStateOf("") },
         mg = remember { mutableStateOf("") },
-        quantity = remember { mutableStateOf("") }
+        quantity = remember { mutableStateOf(0) }
     )
 
     val medicine5 = Tablet(
         name = remember { mutableStateOf("") },
         mg = remember { mutableStateOf("") },
-        quantity = remember { mutableStateOf("") }
+        quantity = remember { mutableStateOf(0) }
     )
 
 
@@ -99,8 +99,8 @@ fun Tabloader(modifier: Modifier = Modifier, maxmeds: Int): List<Tablet> {
                     label = { Text("MG") }
                 )
                 TextField(
-                    value = medicine.quantity.value,
-                    onValueChange = { medicine.quantity.value = it },
+                    value = medicine.quantity.value.toString(),
+                    onValueChange = { medicine.quantity.value = it.toInt() },
                     label = { Text("Quantity") }
                 )
             }

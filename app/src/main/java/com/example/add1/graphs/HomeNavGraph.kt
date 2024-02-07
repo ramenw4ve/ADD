@@ -26,7 +26,7 @@ fun HomeNavGraph(navController: NavHostController, token: String) {
             User_home_page(token, navController = navController)
         }
         composable(route = BottomBarScreen.SelfP.route) {
-            User_self_prescription(navController = navController)
+//            User_self_prescription(navController = navController)
         }
         composable(route = BottomBarScreen.Profile.route) {
             User_profile_Screen(token)
