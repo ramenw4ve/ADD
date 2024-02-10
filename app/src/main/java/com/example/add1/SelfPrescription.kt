@@ -45,7 +45,7 @@ import com.example.add1.graphs.selfpscreen
 
 @Composable
 fun User_self_prescription(
-//    navController: NavHostController
+    navController: NavHostController
 ) {
     val fontFamily = FontFamily(
         Font(R.font.jost_semibold, FontWeight.SemiBold)
@@ -321,6 +321,7 @@ fun User_self_prescription(
                                 .border(BorderStroke((1.5).dp, Color.Gray))
                                 .padding(5.dp)
                         )
+
                         Spacer(modifier = Modifier.width(10.dp))
 
                         Text(
@@ -409,6 +410,7 @@ fun User_self_prescription(
 
                     }
                 }
+                var tablist = h.toList()
 
                 Button(
                     onClick =
@@ -417,30 +419,31 @@ fun User_self_prescription(
                         shouldprescribe = true
 
 
+
                     }) {
                     Text(text = "Click me")
                 }
 
-                LaunchedEffect(key1 = shouldprescribe) {
-
-                    val medicineList = h.map {
-                        Medicine(
-                            name = it.name.value,
-                            mg = it.mg.value,
-                            quantity = it.quantity.value.toString()
-                        )
-                    }
-
-                    val am = AMedicines(medicineList)
-
-                    if (shouldprescribe) {
-                        toke =
-                            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWMxZGNmYzA1NDAzMjZmMmM3YzdmMDMiLCJpYXQiOjE3MDczMjY1NjIsImV4cCI6MTcwNzM0NDU2Mn0._OhOROr2rOM6i_GZiLTsPcQy9Ohm6-pqAa_hfSm9KiA"
-                        resp = ktorClient.postSelfMeds("selfPrescription", am, toke).toString()
-
-                    }
-                    shouldprescribe = false
-                }
+//                LaunchedEffect(key1 = shouldprescribe) {
+//
+//                    val medicineList = h.map {
+//                        Medicine(
+//                            name = it.name.value,
+//                            mg = it.mg.value,
+//                            quantity = it.quantity.value.toString()
+//                        )
+//                    }
+//
+//                    val am = AMedicines(medicineList)
+//
+//                    if (shouldprescribe) {
+//                        toke =
+//                            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWMxZGNmYzA1NDAzMjZmMmM3YzdmMDMiLCJpYXQiOjE3MDczMjY1NjIsImV4cCI6MTcwNzM0NDU2Mn0._OhOROr2rOM6i_GZiLTsPcQy9Ohm6-pqAa_hfSm9KiA"
+//                        resp = ktorClient.postSelfMeds("selfPrescription", am, toke).toString()
+//
+//                    }
+//                    shouldprescribe = false
+//                }
 
                 Image(
                     painter = painterResource(id = R.drawable.view_cart_ii),
@@ -449,10 +452,18 @@ fun User_self_prescription(
                     modifier = Modifier
                         .offset(x = 9.dp, y = 40.dp)
                         .clickable {
-//                            navController.navigate(selfpscreen.viewcart.route)
+//                            navController.navigate("${selfpscreen.viewcart.route}/$tablist")
+//                            navController.navigate("${selfpscreen.viewcart.route}/${tablist.joinToString(",")}")
+                            navController.navigate("${selfpscreen.viewcart.route}/${tablist.joinToString(",") { tabletToString(it) }}")
+
                         }
 
                 )
+
+                for(i in tablist)
+                {
+                    Text("re "+i.name.value)
+                }
 
             }
 
@@ -460,4 +471,8 @@ fun User_self_prescription(
     }
 
 
+}
+
+fun tabletToString(tablet: Tablet): String {
+    return "${tablet.name.value};${tablet.mg.value};${tablet.quantity.value}"
 }

@@ -19,6 +19,7 @@ fun RootNavigationGraph(navController: NavHostController) {
             val token = backStackEntry.arguments?.getString("token") ?: ""
             HomeScreen  (token = token)
         }
+//        navController.navigate((Graph.PHOME)+"/$toke")
         composable(route = "${Graph.DHOME}/{dtoken}") { backStackEntry ->
             val dtoken = backStackEntry.arguments?.getString("dtoken") ?: ""
             DHomeScreen  (token = dtoken)

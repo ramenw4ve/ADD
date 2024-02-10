@@ -281,7 +281,7 @@ fun Doc_signup(navController: NavHostController) {
                 LaunchedEffect(key1 = shouldTriggerSignup) {
                     if (shouldTriggerSignup) {
 //                        doctor = ktorClient.postDoctor("signup", Doctor(rgno, spc, name, pwd))
-                            dtoke  = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWIxZTY0YWU2OWYwZGUyNWM1MmExYjAiLCJpYXQiOjE3MDcxOTc4MDksImV4cCI6MTcwNzIxNTgwOX0.wns0LsNYqL4c4yECQBQ9LbSWpP03bvVJRuuoWHgbIW0"
+                            dtoke  = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWMxZGUzMDA1NDAzMjZmMmM3YzdmMDciLCJpYXQiOjE3MDczNzY2ODIsImV4cCI6MTcwNzM5NDY4Mn0.Vw4teUpaGS70bxMNFdRrATubCY34ElfslrQzcTbyUFQ"
 
 //                        if (doctor.contains("created")) {
                         snackbarHostState.showSnackbar(

@@ -1,5 +1,7 @@
 package com.example.add1
 
+import android.os.Parcel
+import android.os.Parcelable
 import androidx.compose.runtime.MutableState
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -29,7 +31,7 @@ import kotlinx.coroutines.launch
 
 class KtorClient {
     private val client = HttpClient(OkHttp) {
-        defaultRequest { url("http://192.168.0.105:7000/") }
+        defaultRequest { url("http://192.168.31.221:7000/") }
 
         install(Logging) {
             logger = Logger.SIMPLE
@@ -305,6 +307,32 @@ data class Tablet(
     val mg: MutableState<String>,
     val quantity: MutableState<Int>
 )
+//    : Parcelable {
+//    constructor(parcel: Parcel) : this(
+//        TODO("name"),
+//        TODO("mg"),
+//        TODO("quantity")
+//    ) {
+//    }
+//
+//    override fun writeToParcel(parcel: Parcel, flags: Int) {
+//
+//    }
+//
+//    override fun describeContents(): Int {
+//        return 0
+//    }
+//
+//    companion object CREATOR : Parcelable.Creator<Tablet> {
+//        override fun createFromParcel(parcel: Parcel): Tablet {
+//            return Tablet(parcel)
+//        }
+//
+//        override fun newArray(size: Int): Array<Tablet?> {
+//            return arrayOfNulls(size)
+//        }
+//    }
+//}
 
 //@Serializable
 //data class Character(
