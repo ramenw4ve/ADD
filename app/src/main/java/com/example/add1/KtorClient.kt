@@ -1,7 +1,5 @@
 package com.example.add1
 
-import android.os.Parcel
-import android.os.Parcelable
 import androidx.compose.runtime.MutableState
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -15,23 +13,16 @@ import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
-import io.ktor.client.statement.HttpResponse
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
-import io.ktor.http.isSuccess
 import io.ktor.serialization.kotlinx.json.json
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonElement
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 class KtorClient {
     private val client = HttpClient(OkHttp) {
-        defaultRequest { url("http://192.168.0.105:7000/") }
+        defaultRequest { url("http://192.168.0.3:7000/") }
 
         install(Logging) {
             logger = Logger.SIMPLE
@@ -139,6 +130,13 @@ class KtorClient {
 
         return request.body()
     }
+
+    suspend fun getAllMeds(end: String): AllMed {
+
+        val request = client.get("/patient/$end")
+        return request.body()
+    }
+
     suspend fun getQR(end: String): ViewQR {
 
 
@@ -273,6 +271,11 @@ data class AMedicines(
 )
 
 @Serializable
+data class AllMed(
+    val listOfMed: List<DBMedicine>
+)
+
+@Serializable
 data class Medicine(
     val name: String,
     val mg: String,
@@ -292,6 +295,12 @@ data class IMedicine(
     val price: Int,
     val _id:String
 )
+@Serializable
+data class DBMedicine(
+    val medName: String,
+    val medMg: Int,
+    val medPrice: Int,
+)
 
 
 //@Serializable
@@ -300,12 +309,19 @@ data class IMedicine(
 //    val mg: MutableState<String>,
 //    val quantity: MutableState<String>
 //)
-
+@Serializable
+data class Talbet(
+    val name: String,
+    val mg: String,
+    val quantity: MutableState<Int>,
+    val price:String,
+    val totalprice: MutableState<Int>
+)
 @Serializable
 data class Tablet(
     val name: MutableState<String>,
     val mg: MutableState<String>,
-    val quantity: MutableState<Int>
+    val quantity: MutableState<Int>,
 )
 //    : Parcelable {
 //    constructor(parcel: Parcel) : this(

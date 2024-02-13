@@ -239,7 +239,7 @@ fun User_signup(navController: NavHostController) {
                     if (shouldTriggerSignup) {
 //                        patient = ktorClient.postPatient("signup", Patient(name, phno, pw))
 //                        toke = ktorClient.postLPatient("login", LPatient(patient.toString(), pw)).toString()
-                        toke = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWMxZGNmYzA1NDAzMjZmMmM3YzdmMDMiLCJpYXQiOjE3MDc2NjgyOTAsImV4cCI6MTcwNzY4NjI5MH0.rQ7xHunKcl--oPr1AzHBbRsMugwet_eapQvagaLKeI4"
+                        toke = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWMxZGNmYzA1NDAzMjZmMmM3YzdmMDMiLCJpYXQiOjE3MDc4MDE5MTgsImV4cCI6MTcwNzgxOTkxOH0.W8i5nfHsT53IdgzF49NQ7oTYiMLXZw9fYcLFy2P1kHI"
 
 
 

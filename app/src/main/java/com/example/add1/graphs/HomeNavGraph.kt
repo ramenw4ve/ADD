@@ -10,6 +10,7 @@ import androidx.navigation.navigation
 import com.example.add1.BottomBarScreen
 import com.example.add1.PatViewQR
 import com.example.add1.Tablet
+import com.example.add1.Talbet
 import com.example.add1.User_home_page
 import com.example.add1.User_payment
 import com.example.add1.User_prescriptions
@@ -55,16 +56,19 @@ fun NavGraphBuilder.selfpNavGraph(navController: NavHostController) {
 
         composable(route = "${selfpscreen.viewcart.route}/{tablets}") { backStackEntry ->
             val tabletsString = backStackEntry.arguments?.getString("tablets") ?: ""
-            val tabletList: List<Tablet> = tabletsString.split(",").map {
+            val tabletList: List<Talbet> = tabletsString.split(",").map {
                 val tabletValues = it.split(";")
-                if (tabletValues.size == 3) {
-                    Tablet(
-                        mutableStateOf(tabletValues[0]),
-                        mutableStateOf(tabletValues[1]),
-                        mutableStateOf(tabletValues[2].toInt())
+                if (tabletValues.size == 5) {
+                    Talbet(
+                        tabletValues[0],
+                        tabletValues[1],
+                        mutableStateOf(tabletValues[2].toInt()),
+                        tabletValues[3],
+                        mutableStateOf(tabletValues[4].toInt())
+
                     )
                 } else {
-                    Tablet(mutableStateOf(""), mutableStateOf(""), mutableStateOf(0))
+                    Talbet("deault", "", mutableStateOf(0),"", mutableStateOf(0))
                 }
             }
 

@@ -21,7 +21,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,13 +28,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -63,34 +62,44 @@ fun User_self_prescription(
     }
 //    var am: AMedicines? = null
 
-    val medicine1 = Tablet(
-        name = remember { mutableStateOf("Gelusil MPS") },
-        mg = remember { mutableStateOf("600") },
-        quantity = remember { mutableStateOf(0) }
+    val medicine1 = Talbet(
+        name = "Gelusil MPS",
+        mg = "600",
+        price = "24",
+        quantity = remember { mutableStateOf(0) },
+        totalprice = remember { mutableStateOf(0) }
     )
 
-    val medicine2 = Tablet(
-        name = remember { mutableStateOf("Okacet") },
-        mg = remember { mutableStateOf("10") },
-        quantity = remember { mutableStateOf(0) }
+    val medicine2 = Talbet(
+        name = "Okacet",
+        mg = "10",
+        price = "22",
+        quantity = remember { mutableStateOf(0) },
+        totalprice = remember { mutableStateOf(0) }
     )
 
-    val medicine3 = Tablet(
-        name = remember { mutableStateOf("Dolo 650") },
-        mg = remember { mutableStateOf("650") },
-        quantity = remember { mutableStateOf(0) }
+    val medicine3 = Talbet(
+        name = "Dolo 650",
+        mg = "650",
+        price = "31",
+        quantity = remember { mutableStateOf(0) },
+        totalprice = remember { mutableStateOf(0) }
     )
 
-    val medicine4 = Tablet(
-        name = remember { mutableStateOf("Saridon") },
-        mg = remember { mutableStateOf("550") },
-        quantity = remember { mutableStateOf(0) }
+    val medicine4 = Talbet(
+        name = "Saridon",
+        mg = "550",
+        price = "25",
+        quantity = remember { mutableStateOf(0)},
+        totalprice = remember { mutableStateOf(0) }
     )
 
-    val medicine5 = Tablet(
-        name = remember { mutableStateOf("Zincovit") },
-        mg = remember { mutableStateOf("50") },
-        quantity = remember { mutableStateOf(0) }
+    val medicine5 = Talbet(
+        name = "Zincovit",
+        mg = "25",
+        price = "110",
+        quantity = remember { mutableStateOf(0) },
+        totalprice = remember { mutableStateOf(0) }
     )
 
     val meds = listOf(medicine1, medicine2, medicine3, medicine4, medicine5)
@@ -131,13 +140,14 @@ fun User_self_prescription(
                 )
                 {
                     Text(
-                        text = medicine1.name.value,
+                        text = medicine1.name,
                         fontSize = 22.sp,
                         modifier = Modifier
                             .offset(x = 0.dp)
                             .weight(0.5f)
 
                     )
+                    Text(text = medicine1.price)
                     Row(
                         modifier = Modifier
                             .weight(0.5f)
@@ -174,6 +184,8 @@ fun User_self_prescription(
                                 .border(BorderStroke((1.5).dp, Color.Gray))
                                 .padding(5.dp)
                         )
+                        medicine1.totalprice.value = medicine1.price.toInt() * medicine1.quantity.value
+                        Text(text = medicine1.totalprice.value.toString())
                     }
 
 
@@ -186,7 +198,7 @@ fun User_self_prescription(
                 Row(modifier = Modifier.offset(x = 30.dp))
                 {
                     Text(
-                        text = medicine2.name.value,
+                        text = medicine2.name,
                         fontSize = 22.sp,
                         modifier = Modifier
                             .offset(x = 0.dp)
@@ -242,7 +254,7 @@ fun User_self_prescription(
                 Row(modifier = Modifier.offset(x = 30.dp))
                 {
                     Text(
-                        text = medicine3.name.value,
+                        text = medicine3.name,
                         fontSize = 22.sp,
                         modifier = Modifier
                             .offset(x = 0.dp)
@@ -297,7 +309,7 @@ fun User_self_prescription(
                 Row(modifier = Modifier.offset(x = 30.dp))
                 {
                     Text(
-                        text = medicine4.name.value,
+                        text = medicine4.name,
                         fontSize = 22.sp,
                         modifier = Modifier
                             .offset(x = 0.dp)
@@ -352,7 +364,7 @@ fun User_self_prescription(
                 Row(modifier = Modifier.offset(x = 30.dp))
                 {
                     Text(
-                        text = medicine5.name.value,
+                        text = medicine5.name,
                         fontSize = 22.sp,
                         modifier = Modifier
                             .offset(x = 0.dp)
@@ -403,7 +415,7 @@ fun User_self_prescription(
                 Spacer(modifier = Modifier.height(30.dp))
 //            val counts = listOf(m1,m2,m3,m4,m5)
 
-                val h = mutableListOf<Tablet>()
+                val h = mutableListOf<Talbet>()
                 for (i in meds) {
                     if (i.quantity.value != 0) {
                         h.add(i)
@@ -428,8 +440,8 @@ fun User_self_prescription(
 
                     val medicineList = h.map {
                         Medicine(
-                            name = it.name.value,
-                            mg = it.mg.value,
+                            name = it.name,
+                            mg = it.mg,
                             quantity = it.quantity.value.toString()
                         )
                     }
@@ -452,7 +464,13 @@ fun User_self_prescription(
                     modifier = Modifier
                         .offset(x = 9.dp, y = 40.dp)
                         .clickable {
-                            navController.navigate("${selfpscreen.viewcart.route}/${tablist.joinToString(",") { tabletToString(it) }}")
+                            navController.navigate(
+                                "${selfpscreen.viewcart.route}/${
+                                    tablist.joinToString(
+                                        ","
+                                    ) { TalbetToString(it) }
+                                }"
+                            )
 
                         }
 
@@ -460,7 +478,7 @@ fun User_self_prescription(
 
                 for(i in tablist)
                 {
-                    Text("re "+i.name.value)
+                    Text("re "+i.name)
                 }
 
             }
@@ -471,6 +489,13 @@ fun User_self_prescription(
 
 }
 
-fun tabletToString(tablet: Tablet): String {
-    return "${tablet.name.value};${tablet.mg.value};${tablet.quantity.value}"
+fun TalbetToString(Talbet: Talbet): String {
+    return "${Talbet.name};${Talbet.mg};${Talbet.quantity.value};${Talbet.price};${Talbet.totalprice.value}"
 }
+
+//@Preview
+//@Composable
+//fun SelfPreview() {
+//    User_self_prescription(navController = NavHostController)
+//}
+//

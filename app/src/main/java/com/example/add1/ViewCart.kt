@@ -40,7 +40,7 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun ViewCart(
-    tablist: List<Tablet>
+    tablist: List<Talbet>
 ) {
     var shouldprescribe by remember {
         mutableStateOf(false)
@@ -51,42 +51,34 @@ fun ViewCart(
     var resp by remember {
         mutableStateOf<String>("")
     }
+
+//    var total by remember {
+//        mutableStateOf<Int>(0)
+//    }
+
+    var total:Int = 0
+
+//    var allMed by remember {
+//        mutableStateOf<AllMed?>(null)
+//    }
+
+    var allMed:AllMed? = null
+
     val ktorClient = KtorClient()
 
     val fontFamily = FontFamily(
         Font(R.font.jost_semibold, FontWeight.SemiBold)
     )
 
-//    val medicine1 = Tablet(
-//        name = remember { mutableStateOf("Gelusil MPS") },
-//        mg = remember { mutableStateOf("600") },
-//        quantity = remember { mutableIntStateOf(0) }
-//    )
-//
-//    val medicine2 = Tablet(
-//        name = remember { mutableStateOf("Okacet") },
-//        mg = remember { mutableStateOf("10") },
-//        quantity = remember { mutableIntStateOf(0) }
-//    )
-//
-//    val medicine3 = Tablet(
-//        name = remember { mutableStateOf("Dolo 650") },
-//        mg = remember { mutableStateOf("650") },
-//        quantity = remember { mutableIntStateOf(0) }
-//    )
-//
-//    val medicine4 = Tablet(
-//        name = remember { mutableStateOf("Saridon") },
-//        mg = remember { mutableStateOf("550") },
-//        quantity = remember { mutableIntStateOf(0) }
-//    )
-////    val medicine5 = Tablet(
-////        name = remember { mutableStateOf("Ronny") },
-////        mg = remember { mutableStateOf("550") },
-////        quantity = remember { mutableIntStateOf(0) }
-////    )
-//    //    var TabletList = medlist.toMutableList()
-//    val tablist = mutableListOf(medicine1, medicine2, medicine3, medicine4)
+
+    LaunchedEffect(Unit) {
+       allMed = ktorClient.getAllMeds("medicines")
+    }
+
+    for(i in tablist)
+    {
+        total+= i.totalprice.value
+    }
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -98,6 +90,7 @@ fun ViewCart(
 
         Box(modifier = Modifier.fillMaxSize())
         {
+            Image(painterResource(id = R.drawable.greenbg), contentDescription = null, contentScale = ContentScale.FillBounds)
 
 
             LazyColumn(
@@ -129,22 +122,24 @@ fun ViewCart(
                                     .offset(45.dp)
                             ) {
                                 Text(
-                                    i.name.value,
+                                    i.name,
+                                    fontSize = 24.sp,
+                                    fontFamily = fontFamily,
+                                    color = Color(0xFF6CB5AC)
+                                )
+
+
+                                Text(
+                                    i.mg+" mg",
                                     fontSize = 20.sp,
                                     fontFamily = fontFamily,
-                                    color = Color(0xFF6CB5AC)
+                                    color = Color(0xFFFF9c9f)
                                 )
                                 Text(
-                                    i.mg.value,
-                                    fontSize = 16.sp,
+                                    "₹ "+i.price.toString(),
+                                    fontSize = 18.sp,
                                     fontFamily = fontFamily,
-                                    color = Color(0xFF6CB5AC)
-                                )
-                                Text(
-                                    "Price",
-                                    fontSize = 22.sp,
-                                    fontFamily = fontFamily,
-                                    color = Color(0xFF6CB5AC)
+                                    color = Color.Black
                                 )
                             }
 
@@ -191,6 +186,9 @@ fun ViewCart(
                                 )
 
                             }
+                            i.totalprice.value = i.price.toInt()*i.quantity.value
+                            Text(text = i.totalprice.value.toString(),
+                                modifier = Modifier.offset(x = -15.dp))
 
                         }
 
@@ -198,7 +196,7 @@ fun ViewCart(
                 }
             }
 
-            val mutabletabs = mutableListOf<Tablet>()
+            val mutabletabs = mutableListOf<Talbet>()
             for (i in tablist) {
                 if (i.quantity.value != 0) {
                     mutabletabs.add(i)
@@ -223,10 +221,17 @@ fun ViewCart(
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier.offset(y = 632.dp)
             )
+
+
+
+            Text(total.toString(),
+                modifier = Modifier
+                    .offset(x = 55.dp, y = 670.dp))
             Image(
                 painterResource(id = R.drawable.checkout), contentDescription = null,
                 contentScale = ContentScale.FillBounds,
-                modifier = Modifier.offset(x = 55.dp,y = 725.dp)
+                modifier = Modifier
+                    .offset(x = 55.dp, y = 725.dp)
                     .clickable {
 
                         shouldprescribe = true
@@ -238,8 +243,8 @@ fun ViewCart(
 
                     val medicineList = postablelist.map {
                         Medicine(
-                            name = it.name.value,
-                            mg = it.mg.value,
+                            name = it.name,
+                            mg = it.mg,
                             quantity = it.quantity.value.toString()
                         )
                     }
@@ -248,7 +253,7 @@ fun ViewCart(
 
                     if (shouldprescribe) {
                         toke =
-                            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWMxZGNmYzA1NDAzMjZmMmM3YzdmMDMiLCJpYXQiOjE3MDc2Njc3MTMsImV4cCI6MTcwNzY4NTcxM30.bs8ei-jThGRxzDYk0D_oJeg0EVU6bCJfwC5oRo8svCU"
+                            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWMxZGNmYzA1NDAzMjZmMmM3YzdmMDMiLCJpYXQiOjE3MDc4MDk5MzUsImV4cCI6MTcwNzgyNzkzNX0.aMWXiDqET9tL3A4eauUTmLjP052tg7vv6gbbnkYiVxQ"
                         resp = ktorClient.postSelfMeds("selfPrescription", am, toke).toString()
 
                     }
