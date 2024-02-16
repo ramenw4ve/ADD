@@ -12,10 +12,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 //import androidx.compose.foundation.layout.FlowColumnScopeInstance.align
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -45,22 +49,12 @@ import com.example.add1.graphs.selfpscreen
 @Composable
 fun User_self_prescription(
     navController: NavHostController
+
 ) {
     val fontFamily = FontFamily(
         Font(R.font.jost_semibold, FontWeight.SemiBold)
     )
-    var toke by remember {
-        mutableStateOf<String>("")
-    }
-    var resp by remember {
-        mutableStateOf<String>("")
-    }
-    val ktorClient = KtorClient()
 
-    var shouldprescribe by remember {
-        mutableStateOf(false)
-    }
-//    var am: AMedicines? = null
 
     val medicine1 = Talbet(
         name = "Gelusil MPS",
@@ -103,387 +97,196 @@ fun User_self_prescription(
     )
 
     val meds = listOf(medicine1, medicine2, medicine3, medicine4, medicine5)
+    var total:Int = 0
 
+
+    for(i in meds)
+    {
+        total+= i.totalprice.value
+    }
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = Color(0xFFFF9C9F)),
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.self_prescription_top_design),
-            contentDescription = null,
-            modifier = Modifier.align(Alignment.End)
-        )
+    )
+    {
 
 
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .clip(RoundedCornerShape(size = 40.dp))
-                .background(Color.White),
-            contentAlignment = Alignment.TopCenter
+        Box(modifier = Modifier.fillMaxSize())
+        {
+            Image(painterResource(id = R.drawable.greenbg), contentDescription = null, contentScale = ContentScale.FillBounds)
 
 
-        ) {
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.offset(y = 0.dp)
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .offset(y = 90.dp)
+                    .size(470.dp)
+//                .background(Color.Cyan)
             )
             {
-                Row(
-                    modifier = Modifier
-                        .offset(x = 30.dp)
-                        .padding(top = 35.dp)
-                )
-                {
-                    Text(
-                        text = medicine1.name,
-                        fontSize = 22.sp,
-                        modifier = Modifier
-                            .offset(x = 0.dp)
-                            .weight(0.5f)
-
-                    )
-                    Text(text = medicine1.price)
-                    Row(
-                        modifier = Modifier
-                            .weight(0.5f)
-
-                            .offset(x = 50.dp)
+                items(meds)
+                { i ->
+                    Box(
+                        modifier = Modifier.fillParentMaxWidth(),
+                        contentAlignment = Alignment.Center
                     )
                     {
-                        Text(
-                            text = "-",
-                            fontSize = 20.sp,
-                            modifier = Modifier
-                                .clickable {
-                                    medicine1.quantity.value -= 1
+                        Image(
+                            painterResource(id = R.drawable.shadowrectangle),
+                            contentDescription = null
+                        )
+                        Row(
+                            modifier = Modifier.fillParentMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceEvenly
+                        ) {
+                            Column(
+                                modifier = Modifier
+                                    //                        .background(Color.Cyan)
+                                    .weight(0.5f)
+                                    .offset(45.dp)
+                            ) {
+                                Text(
+                                    i.name,
+                                    fontSize = 24.sp,
+                                    fontFamily = fontFamily,
+                                    color = Color(0xFF6CB5AC)
+                                )
+
+
+                                Text(
+                                    i.mg+" mg",
+                                    fontSize = 20.sp,
+                                    fontFamily = fontFamily,
+                                    color = Color(0xFFFF9c9f)
+                                )
+                                Text(
+                                    "₹ "+i.price.toString(),
+                                    fontSize = 18.sp,
+                                    fontFamily = fontFamily,
+                                    color = Color.Black
+                                )
+                            }
+
+
+                            Box(
+                                contentAlignment = Alignment.Center,
+                                modifier = Modifier
+                                    //                            .background(Color.Green)
+                                    .weight(0.5f)
+                                    .offset(35.dp, y = -5.dp)
+                            ) {
+                                Image(
+                                    painterResource(id = R.drawable.border),
+                                    contentDescription = null,
+                                    contentScale = ContentScale.FillBounds
+                                )
+                                Column(verticalArrangement = Arrangement.Top) {
+                                    Image(painterResource(id = R.drawable.plus),
+                                        contentDescription = null,
+                                        modifier = Modifier.clickable { i.quantity.value++ }
+                                    )
+                                    Image(
+                                        painterResource(id = R.drawable.midrect),
+                                        contentDescription = null,
+                                        contentScale = ContentScale.FillBounds,
+                                        modifier = Modifier.offset(y = (0).dp)
+                                    )
+                                    Image(painterResource(id = R.drawable.minus),
+                                        contentDescription = null,
+                                        modifier = Modifier
+                                            .offset(y = (0).dp)
+                                            .clickable {
+                                                if (i.quantity.value != 0) {
+                                                    i.quantity.value--
+                                                }
+
+                                            })
                                 }
-                                .border(BorderStroke((1.5).dp, Color.Gray))
-                                .padding(5.dp)
-                        )
-                        Spacer(modifier = Modifier.width(10.dp))
-
-                        Text(
-                            text = medicine1.quantity.value.toString(),
-                            fontSize = 25.sp
-                        )
-
-                        Spacer(modifier = Modifier.width(10.dp))
-
-                        Text(
-                            text = "+",
-                            fontSize = 20.sp,
-                            modifier = Modifier
-                                .clickable {
-                                    medicine1.quantity.value += 1
-                                }
-                                .border(BorderStroke((1.5).dp, Color.Gray))
-                                .padding(5.dp)
-                        )
-                        medicine1.totalprice.value = medicine1.price.toInt() * medicine1.quantity.value
-                        Text(text = medicine1.totalprice.value.toString())
-                    }
-
-
-                }
-
-
-                Spacer(modifier = Modifier.height(30.dp))
-
-
-                Row(modifier = Modifier.offset(x = 30.dp))
-                {
-                    Text(
-                        text = medicine2.name,
-                        fontSize = 22.sp,
-                        modifier = Modifier
-                            .offset(x = 0.dp)
-                            .weight(0.5f)
-
-                    )
-                    Row(
-                        modifier = Modifier
-                            .weight(0.5f)
-
-                            .offset(x = 50.dp)
-                    )
-                    {
-                        Text(
-                            text = "-",
-                            fontSize = 20.sp,
-                            modifier = Modifier
-                                .clickable {
-                                    medicine2.quantity.value -= 1
-                                }
-                                .border(BorderStroke((1.5).dp, Color.Gray))
-                                .padding(5.dp)
-                        )
-                        Spacer(modifier = Modifier.width(10.dp))
-
-                        Text(
-                            text = medicine2.quantity.value.toString(),
-                            fontSize = 25.sp
-                        )
-
-                        Spacer(modifier = Modifier.width(10.dp))
-
-                        Text(
-                            text = "+",
-                            fontSize = 20.sp,
-                            modifier = Modifier
-                                .clickable {
-                                    medicine2.quantity.value += 1
-                                }
-                                .border(BorderStroke((1.5).dp, Color.Gray))
-                                .padding(5.dp)
-                        )
-                    }
-
-
-                }
-
-
-                Spacer(modifier = Modifier.height(30.dp))
-
-
-
-                Row(modifier = Modifier.offset(x = 30.dp))
-                {
-                    Text(
-                        text = medicine3.name,
-                        fontSize = 22.sp,
-                        modifier = Modifier
-                            .offset(x = 0.dp)
-                            .weight(0.5f)
-
-                    )
-                    Row(
-                        modifier = Modifier
-                            .weight(0.5f)
-
-                            .offset(x = 50.dp)
-                    )
-                    {
-                        Text(
-                            text = "-",
-                            fontSize = 20.sp,
-                            modifier = Modifier
-                                .clickable {
-                                    medicine3.quantity.value -= 1
-                                }
-                                .border(BorderStroke((1.5).dp, Color.Gray))
-                                .padding(5.dp)
-                        )
-                        Spacer(modifier = Modifier.width(10.dp))
-
-                        Text(
-                            text = medicine3.quantity.value.toString(),
-                            fontSize = 25.sp
-                        )
-
-                        Spacer(modifier = Modifier.width(10.dp))
-
-                        Text(
-                            text = "+",
-                            fontSize = 20.sp,
-                            modifier = Modifier
-                                .clickable {
-                                    medicine3.quantity.value += 1
-                                }
-                                .border(BorderStroke((1.5).dp, Color.Gray))
-                                .padding(5.dp)
-                        )
-                    }
-
-
-                }
-
-
-                Spacer(modifier = Modifier.height(30.dp))
-
-
-                Row(modifier = Modifier.offset(x = 30.dp))
-                {
-                    Text(
-                        text = medicine4.name,
-                        fontSize = 22.sp,
-                        modifier = Modifier
-                            .offset(x = 0.dp)
-                            .weight(0.5f)
-
-                    )
-                    Row(
-                        modifier = Modifier
-                            .weight(0.5f)
-
-                            .offset(x = 50.dp)
-                    )
-                    {
-                        Text(
-                            text = "-",
-                            fontSize = 20.sp,
-                            modifier = Modifier
-                                .clickable {
-                                    medicine4.quantity.value -= 1
-                                }
-                                .border(BorderStroke((1.5).dp, Color.Gray))
-                                .padding(5.dp)
-                        )
-
-                        Spacer(modifier = Modifier.width(10.dp))
-
-                        Text(
-                            text = medicine4.quantity.value.toString(),
-                            fontSize = 25.sp
-                        )
-
-                        Spacer(modifier = Modifier.width(10.dp))
-
-                        Text(
-                            text = "+",
-                            fontSize = 20.sp,
-                            modifier = Modifier
-                                .clickable {
-                                    medicine4.quantity.value += 1
-                                }
-                                .border(BorderStroke((1.5).dp, Color.Gray))
-                                .padding(5.dp)
-                        )
-                    }
-
-
-                }
-
-
-                Spacer(modifier = Modifier.height(30.dp))
-
-                Row(modifier = Modifier.offset(x = 30.dp))
-                {
-                    Text(
-                        text = medicine5.name,
-                        fontSize = 22.sp,
-                        modifier = Modifier
-                            .offset(x = 0.dp)
-                            .weight(0.5f)
-
-                    )
-                    Row(
-                        modifier = Modifier
-                            .weight(0.5f)
-
-                            .offset(x = 50.dp)
-                    )
-                    {
-                        Text(
-                            text = "-",
-                            fontSize = 20.sp,
-                            modifier = Modifier
-                                .clickable {
-                                    medicine5.quantity.value -= 1
-                                }
-                                .border(BorderStroke((1.5).dp, Color.Gray))
-                                .padding(5.dp)
-                        )
-                        Spacer(modifier = Modifier.width(10.dp))
-
-                        Text(
-                            text = medicine5.quantity.value.toString(),
-                            fontSize = 25.sp
-                        )
-
-                        Spacer(modifier = Modifier.width(10.dp))
-
-                        Text(
-                            text = "+",
-                            fontSize = 20.sp,
-                            modifier = Modifier
-                                .clickable {
-                                    medicine5.quantity.value += 1
-                                }
-                                .border(BorderStroke((1.5).dp, Color.Gray))
-                                .padding(5.dp)
-                        )
-                    }
-
-
-                }
-
-                Spacer(modifier = Modifier.height(30.dp))
-//            val counts = listOf(m1,m2,m3,m4,m5)
-
-                val h = mutableListOf<Talbet>()
-                for (i in meds) {
-                    if (i.quantity.value != 0) {
-                        h.add(i)
-
-                    }
-                }
-                var tablist = h.toList()
-
-                Button(
-                    onClick =
-                    {
-
-                        shouldprescribe = true
-
-
-
-                    }) {
-                    Text(text = "Click me")
-                }
-
-                LaunchedEffect(key1 = shouldprescribe) {
-
-                    val medicineList = h.map {
-                        Medicine(
-                            name = it.name,
-                            mg = it.mg,
-                            quantity = it.quantity.value.toString()
-                        )
-                    }
-
-                    val am = AMedicines(medicineList)
-
-                    if (shouldprescribe) {
-                        toke =
-                            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWMxZGNmYzA1NDAzMjZmMmM3YzdmMDMiLCJpYXQiOjE3MDczMjY1NjIsImV4cCI6MTcwNzM0NDU2Mn0._OhOROr2rOM6i_GZiLTsPcQy9Ohm6-pqAa_hfSm9KiA"
-                        resp = ktorClient.postSelfMeds("selfPrescription", am, toke).toString()
-
-                    }
-                    shouldprescribe = false
-                }
-
-                Image(
-                    painter = painterResource(id = R.drawable.view_cart_ii),
-                    contentDescription = null,
-                    contentScale = ContentScale.FillBounds,
-                    modifier = Modifier
-                        .offset(x = 9.dp, y = 40.dp)
-                        .clickable {
-                            navController.navigate(
-                                "${selfpscreen.viewcart.route}/${
-                                    tablist.joinToString(
-                                        ","
-                                    ) { TalbetToString(it) }
-                                }"
-                            )
+                                Text(
+                                    i.quantity.value.toString(),
+                                    fontSize = 20.sp,
+                                    fontFamily = fontFamily,
+                                    color = Color(0xFFF1878A)
+                                )
+
+                            }
+                            i.totalprice.value = i.price.toInt()*i.quantity.value
+//                            Text(text = i.totalprice.value.toString(),
+//                                modifier = Modifier.offset(x = -15.dp))
 
                         }
 
-                )
-
-                for(i in tablist)
-                {
-                    Text("re "+i.name)
+                    }
                 }
-
             }
 
+            val mutabletabs = mutableListOf<Talbet>()
+            for (i in meds) {
+                if (i.quantity.value != 0) {
+                    mutabletabs.add(i)
+                }
+            }
+
+                var tablist = mutabletabs.toList()
+
+
+            Image(painterResource(id = R.drawable.yourcartbg) , contentDescription = null)
+            Text("Self Prescription",
+                fontSize = 40.sp,
+                fontFamily = fontFamily,
+                color = Color.White,
+                modifier = Modifier
+                    .offset((39).dp)
+                    .padding(10.dp)
+            )
+
+
+            Image(
+                painterResource(id = R.drawable.checkoutbg), contentDescription = null,
+                contentScale = ContentScale.FillBounds,
+                modifier = Modifier.offset(y = 560.dp)
+            )
+            for(i in mutabletabs)
+            {
+                Text(text = i.name,modifier = Modifier.offset(x=80.dp,y=600.dp))
+            }
+            LazyColumn {
+                items(mutabletabs)
+                {
+                    Text(text = it.name)
+                }
+            }
+
+
+
+            Text(total.toString(),
+                modifier = Modifier
+                    .offset(x = 55.dp, y = 600.dp))
+            Image(
+                painterResource(id = R.drawable.checkout), contentDescription = null,
+                contentScale = ContentScale.FillBounds,
+                modifier = Modifier
+                    .offset(x = 55.dp, y = 653.dp)
+                    .clickable {
+
+                        navController.navigate(
+                            "${selfpscreen.viewcart.route}/${
+                                meds.joinToString(
+                                    ","
+                                ) { TalbetToString(it) }
+                            }"
+                        )
+
+                    }
+            )
+
+
+
         }
+
+
     }
 
 

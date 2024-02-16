@@ -23,6 +23,7 @@ class MainActivity : ComponentActivity() {
 //User_home_page(toke = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWFkMjBjNjMwODJmMWE1MjFiYzRjOWEiLCJpYXQiOjE3MDU5OTEzMzQsImV4cCI6MTcwNTk5NDkzNH0.u4UtO6-cu_1bnZLCpmOlgnaQGy88t3XP3w_tQXOmzVY")
 //                User_self_prescription(navController = rememberNavController())
                 RootNavigationGraph(navController = rememberNavController())
+
 //                    ViewCartPreview()
         //User_payment(toke = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWFkMjBjNjMwODJmMWE1MjFiYzRjOWEiLCJpYXQiOjE3MDcxNDU4MjgsImV4cCI6MTcwNzE2MzgyOH0.PRIlRVgMWDsZfnzS4eLpMGNdtVMn03mU-Ixo3DxZreo")
 //            AddMedicine()

@@ -22,7 +22,7 @@ import kotlinx.serialization.json.Json
 
 class KtorClient {
     private val client = HttpClient(OkHttp) {
-        defaultRequest { url("http://192.168.0.3:7000/") }
+        defaultRequest { url("http://192.168.10.124:7000/") }
 
         install(Logging) {
             logger = Logger.SIMPLE
