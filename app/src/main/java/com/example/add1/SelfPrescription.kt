@@ -248,22 +248,17 @@ fun User_self_prescription(
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier.offset(y = 560.dp)
             )
-            for(i in mutabletabs)
-            {
-                Text(text = i.name,modifier = Modifier.offset(x=80.dp,y=600.dp))
-            }
-            LazyColumn {
-                items(mutabletabs)
-                {
-                    Text(text = it.name)
-                }
-            }
 
 
 
-            Text(total.toString(),
+
+
+            Text("₹ "+total.toString(),
+                fontSize = 18.sp,
+                fontFamily = fontFamily,
+                color = Color.Black,
                 modifier = Modifier
-                    .offset(x = 55.dp, y = 600.dp))
+                    .offset(x = 165.dp, y = 590.dp))
             Image(
                 painterResource(id = R.drawable.checkout), contentDescription = null,
                 contentScale = ContentScale.FillBounds,

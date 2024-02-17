@@ -257,38 +257,14 @@ fun AddMedicine(
                     }
 
 
-//                    LazyColumn {
-//                        items(medicines) { medicine ->
-//                            Column(modifier = Modifier.padding(8.dp)) {
-//                                Text(
-//                                    text = "Medicine ${medicines.indexOf(medicine)}",
-//                                    modifier = Modifier.padding(5.dp)
-//                                )
-//                                TextField(
-//                                    value = medicine.name.value,
-//                                    onValueChange = { medicine.name.value = it },
-//                                    label = { Text("Name") }
-//                                )
-//                                TextField(
-//                                    value = medicine.mg.value,
-//                                    onValueChange = { medicine.mg.value = it },
-//                                    label = { Text("MG") }
-//                                )
-//                                TextField(
-//                                    value = medicine.quantity.value,
-//                                    onValueChange = { medicine.quantity.value = it },
-//                                    label = { Text("Quantity") }
-//                                )
-//                            }
-//                        }
-//                    }
+
 
 
                     val medicineList = medicines.map {
                         Medicine(
                             name = it.name.value,
-                            mg = it.mg.value,
-                            quantity = it.quantity.value.toString()
+                            mg = it.mg.value.toInt(),
+                            quantity = it.quantity.value
                         )
                     }
 

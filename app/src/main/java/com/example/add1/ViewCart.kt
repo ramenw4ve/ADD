@@ -51,13 +51,14 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun ViewCart(
     meds: List<Talbet>
+    ,toke: String
 ) {
     var shouldprescribe by remember {
         mutableStateOf(false)
     }
-    var toke by remember {
-        mutableStateOf<String>("")
-    }
+//    var toke by remember {
+//        mutableStateOf<String>("")
+//    }
     var resp by remember {
         mutableStateOf<String>("")
     }
@@ -82,7 +83,7 @@ fun ViewCart(
         name = "Dolo 650",
         mg = "650",
         price = "31",
-        quantity = remember { mutableStateOf(3) },
+        quantity = remember { mutableStateOf(0) },
         totalprice = remember { mutableStateOf(0) }
     )
 
@@ -98,7 +99,7 @@ fun ViewCart(
         name = "Zincovit",
         mg = "25",
         price = "110",
-        quantity = remember { mutableStateOf(2) },
+        quantity = remember { mutableStateOf(0) },
         totalprice = remember { mutableStateOf(0) }
     )
 
@@ -128,7 +129,8 @@ fun ViewCart(
 
     val mutabletabs = meds.toMutableList()
 
-    for (i in mutabletabs) {
+    for (i in meds) {
+
         total += i.totalprice.value
 
     }
@@ -244,6 +246,8 @@ fun ViewCart(
                                                 } else {
                                                     val index = meds.indexOfFirst { it.name == i.name }
                                                     meds[index].quantity.value--
+                                                    meds[index].totalprice.value = meds[index].price.toInt() * meds[index].quantity.value
+
 //                                                    i.quantity.value--
 
                                                 }
@@ -259,6 +263,7 @@ fun ViewCart(
 //                                                i.quantity.value++
                                                 val index = meds.indexOfFirst { it.name == i.name }
                                                 meds[index].quantity.value++
+                                                meds[index].totalprice.value = meds[index].price.toInt() * meds[index].quantity.value
 
                                             }
                                     )
@@ -272,8 +277,8 @@ fun ViewCart(
                                 )
 
                             }
-                            i.totalprice.value = i.price.toInt() * i.quantity.value
-                            Text(text = "₹ " + i.totalprice.value.toString(),
+                            val index = meds.indexOfFirst { it.name == i.name }
+                            Text(text = "₹ " + meds[index].totalprice.value.toString(),
                                 modifier = Modifier.offset(x = -15.dp,y = 50.dp))
 
                         }
@@ -283,39 +288,27 @@ fun ViewCart(
             }
 
 
-//            for(x in meds)
-//            {
-//                Text(x.name)
-//                Spacer(modifier = Modifier.height(10.dp))
-//            }
-//            LazyColumn {
-//                items(mutabletabs)
-//                {
-//                    Text(text = it.name)
-//                }
-//            }
 
+            LaunchedEffect(key1 = shouldprescribe) {
 
-//            LaunchedEffect(key1 = shouldprescribe) {
-//
-//                val medicineList = postablelist.map {
-//                    Medicine(
-//                        name = it.name,
-//                        mg = it.mg,
-//                        quantity = it.quantity.value.toString()
-//                    )
-//                }
-//
-//                val am = AMedicines(medicineList)
-//
-//                if (shouldprescribe) {
+                val medicineList = mutabletabs.map {
+                    Medicine(
+                        name = it.name,
+                        mg = it.mg.toInt(),
+                        quantity = it.quantity.value
+                    )
+                }
+
+                val am = AMedicines(medicineList)
+
+                if (shouldprescribe) {
 //                    toke =
 //                        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWMxZGNmYzA1NDAzMjZmMmM3YzdmMDMiLCJpYXQiOjE3MDc4MDk5MzUsImV4cCI6MTcwNzgyNzkzNX0.aMWXiDqET9tL3A4eauUTmLjP052tg7vv6gbbnkYiVxQ"
-//                    resp = ktorClient.postSelfMeds("selfPrescription", am, toke).toString()
-//
-//                }
-//                shouldprescribe = false
-//            }
+                    resp = ktorClient.postSelfMeds("selfPrescription", am, toke).toString()
+
+                }
+                shouldprescribe = false
+            }
 
         }
 
@@ -331,7 +324,10 @@ fun ViewCart(
               Image(
                   painterResource(id = R.drawable.checkoutvector),
                   contentDescription = null,
-                  contentScale = ContentScale.FillBounds
+                  contentScale = ContentScale.FillBounds,
+                  modifier = Modifier.clickable {
+                      shouldprescribe = true
+                  }
               )
           }
             Text(text = "Total ₹ $total",

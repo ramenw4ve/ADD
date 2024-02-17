@@ -140,9 +140,9 @@ fun User_payment(
                     )
                 }
             }
-                LazyRow(
+                LazyColumn(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly
+                    verticalArrangement = Arrangement.SpaceEvenly
                 ) {
                     patH?.let {
                         items(it.Medicines) { med ->

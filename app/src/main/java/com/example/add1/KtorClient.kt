@@ -22,7 +22,7 @@ import kotlinx.serialization.json.Json
 
 class KtorClient {
     private val client = HttpClient(OkHttp) {
-        defaultRequest { url("http://192.168.10.124:7000/") }
+        defaultRequest { url("http://192.168.0.105:7000/") }
 
         install(Logging) {
             logger = Logger.SIMPLE
@@ -278,8 +278,8 @@ data class AllMed(
 @Serializable
 data class Medicine(
     val name: String,
-    val mg: String,
-    val quantity: String
+    val mg: Int,
+    val quantity: Int
 )
 @Serializable
 data class ViewQR(

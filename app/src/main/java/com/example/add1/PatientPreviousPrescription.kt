@@ -106,7 +106,7 @@ fun User_prescriptions(navController: NavHostController,toke:String) {
                     fontSize = 24.sp,
                     fontFamily = fontFamily,
                     fontWeight = FontWeight.SemiBold,
-                    modifier = Modifier.offset(y = -210.dp)
+                    modifier = Modifier.offset(y = -150.dp)
                 )
 
                 LazyColumn {
@@ -138,7 +138,7 @@ fun User_prescriptions(navController: NavHostController,toke:String) {
                     onClick = {
 
                     },
-                    modifier = Modifier.offset(x = 0.dp, y = 190.dp),
+                    modifier = Modifier.offset(x = 0.dp, y = 170.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF9C9F)),
                     shape = RoundedCornerShape(16.dp)
                 )

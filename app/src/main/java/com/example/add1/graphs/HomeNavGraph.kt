@@ -34,12 +34,12 @@ fun HomeNavGraph(navController: NavHostController, token: String) {
         composable(route = BottomBarScreen.Profile.route) {
             User_profile_Screen(token)
         }
-        selfpNavGraph(navController = navController)
+        selfpNavGraph(navController = navController,token)
         activepNavGraph(navController = navController,token = token)
     }
 }
 
-fun NavGraphBuilder.selfpNavGraph(navController: NavHostController) {
+fun NavGraphBuilder.selfpNavGraph(navController: NavHostController,token:String) {
     navigation(
         route = Graph.SELF,
         startDestination = selfpscreen.viewcart.route
@@ -73,7 +73,7 @@ fun NavGraphBuilder.selfpNavGraph(navController: NavHostController) {
             }
 
             // Use the tabletList as needed in your ViewCart composable
-            ViewCart(tabletList)
+            ViewCart(tabletList, toke = token)
         }
 
 

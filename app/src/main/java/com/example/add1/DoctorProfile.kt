@@ -62,16 +62,8 @@ fun DocProfile(dtoke:String) {
         )
     }
     Column {
-        Text(
-            text = "PROFILE",
-            fontSize = 20.sp,
-            color = Color.Black,
-            fontFamily = fontFamily, fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(0.dp, 0.dp)
 
-
-        )
-        Box(modifier = Modifier.offset(y = 0.dp)) {
+        Box(modifier = Modifier.offset(y = 25.dp)) {
             Column {
                 androidx.compose.foundation.Image(
                     painter = painterResource(id = R.drawable.logo1), contentDescription = null,
@@ -128,13 +120,13 @@ fun DocProfile(dtoke:String) {
                 contentDescription = null,
                 modifier = Modifier
                     .clickable { println("Button Clicked!") }
-                    .padding(bottom = 140.dp)
+                    .offset(y = 80.dp)
 
             )
             Text(text = "patient history",
                 modifier = Modifier
                     .clickable {  }
-                    .padding(bottom = 140.dp)
+                    .offset(y =80.dp)
                     .align(Alignment.Center),
                 fontSize = 18.sp,
 //            fontFamily= FontFamily(),
@@ -143,16 +135,16 @@ fun DocProfile(dtoke:String) {
 
 
         }
-        Text(text = "sign out",
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .clickable { println("Button Clicked!") }
-                .padding(top = 40.dp),
-            fontSize = 20.sp,
-//            fontFamily= FontFamily(),
-            fontWeight = FontWeight.SemiBold,
-            color = Color.White
-
-        )
+//        Text(text = "sign out",
+//            modifier = Modifier
+//                .align(Alignment.CenterHorizontally)
+//                .clickable { println("Button Clicked!") }
+//                .offset(y = 200.dp),
+//            fontSize = 20.sp,
+////            fontFamily= FontFamily(),
+//            fontWeight = FontWeight.SemiBold,
+//            color = Color.White
+//
+//        )
     }
 }
