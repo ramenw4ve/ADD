@@ -87,14 +87,15 @@ fun User_self_prescription(
         quantity = remember { mutableStateOf(0)},
         totalprice = remember { mutableStateOf(0) }
     )
-
     val medicine5 = Talbet(
         name = "Zincovit",
-        mg = "25",
-        price = "110",
-        quantity = remember { mutableStateOf(0) },
+        mg = "550",
+        price = "25",
+        quantity = remember { mutableStateOf(0)},
         totalprice = remember { mutableStateOf(0) }
     )
+
+
 
     val meds = listOf(medicine1, medicine2, medicine3, medicine4, medicine5)
     var total:Int = 0

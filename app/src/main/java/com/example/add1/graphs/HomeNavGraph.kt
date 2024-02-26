@@ -44,15 +44,6 @@ fun NavGraphBuilder.selfpNavGraph(navController: NavHostController,token:String)
         route = Graph.SELF,
         startDestination = selfpscreen.viewcart.route
     ) {
-//        composable(route = selfpscreen.selfpre.route) {
-//            User_self_prescription(navController = navController)
-//        }
-//        composable(route = "${selfpscreen.viewcart.route}/{tablets}") { backStackEntry ->
-//        val medlist:List<Tablet> = backStackEntry.arguments?.getParcelableArrayList<Tablet>("tablets") ?: emptyList()
-//
-//            ViewCart(medlist)
-//
-//        }
 
         composable(route = "${selfpscreen.viewcart.route}/{tablets}") { backStackEntry ->
             val tabletsString = backStackEntry.arguments?.getString("tablets") ?: ""

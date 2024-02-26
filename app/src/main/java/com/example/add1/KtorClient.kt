@@ -18,7 +18,9 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import okhttp3.internal.concurrent.TaskRunner.Companion.logger
 
 class KtorClient {
     private val client = HttpClient(OkHttp) {
@@ -78,7 +80,10 @@ class KtorClient {
             return "Added Successfully"
         }
     }
-    suspend fun postSelfMeds(end: String, medicines: AMedicines, accesstoken: String): String {
+    suspend fun postSelfMeds(end: String, medicines: AMedicines, accesstoken: String): String
+    {
+        val json = Json.encodeToString(medicines)
+        logger.info("POST request body: $json")
 
         val response = client.post("/patient/$end") {
             header("Authorization", "Bearer $accesstoken")
@@ -281,6 +286,21 @@ data class Medicine(
     val mg: Int,
     val quantity: Int
 )
+
+@Serializable
+data class Coffee(
+    val name: MutableState<String>,
+    val mg: MutableState<String>,
+    val quantity: MutableState<String>,
+    val days: MutableState<String>,
+    val time: MutableState<String>
+)
+
+@Serializable
+data class ListCoffee(
+    val coffees: List<Coffee>
+)
+
 @Serializable
 data class ViewQR(
     val message: String,

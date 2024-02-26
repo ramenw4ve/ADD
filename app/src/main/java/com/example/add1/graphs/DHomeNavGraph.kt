@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import com.example.add1.AddMed
 import com.example.add1.AddMedicine
 import com.example.add1.Addppage
 import com.example.add1.BottomBarScreen
@@ -58,23 +59,23 @@ fun NavGraphBuilder.addmNavGraph(navController: NavHostController) {
         route = Graph.ADDM,
         startDestination = addmscreen.addmedi.route
     ) {
-//        composable(route = selfpscreen.selfpre.route) {
-//            User_self_prescription(navController = navController)
-//        }
         composable(route = addmscreen.addmedi.route + "/{patientId}",
             arguments = listOf(
                 navArgument("patientId") { type = NavType.IntType }
             )){
-//            ScreenContent(name = selfpscreen.viewcart.route) {
-//                navController.popBackStack(
-//                    route = selfpscreen.selfpre.route,
-//                    inclusive = false
-//                )
-//            }
+
             backStackEntry ->
             val patientId = backStackEntry.arguments?.getInt("patientId")
-            AddMedicine(patid = patientId!!) // Ensure patientId is not null
+//            AddMedicine(patid = patientId!!) // Ensure patientId is not null
+//            AddMed()
 
+        }
+        composable(route = addmscreen.addmedi.route + "/{patientId}",
+            arguments = listOf(navArgument("patientId") {type  = NavType.StringType})
+            )
+        {
+
+            AddMed(it.arguments?.getString("patientId"))
         }
     }
 }

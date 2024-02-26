@@ -62,6 +62,7 @@ fun ViewCart(
     var resp by remember {
         mutableStateOf<String>("")
     }
+    var medicineList: List<Medicine> = listOf(Medicine("Gelusil MPS",600,6))
 
     val medicine1 = Talbet(
         name = "Gelusil MPS",
@@ -223,7 +224,7 @@ fun ViewCart(
                                 modifier = Modifier
 //                                                                .background(Color.Green)
                                     .weight(0.5f)
-                                    .offset(35.dp, y = 6.dp)
+                                    .offset(45.dp, y = 6.dp)
                             ) {
                                 Image(
                                     painterResource(id = R.drawable.horiborder),
@@ -244,9 +245,11 @@ fun ViewCart(
                                                 if (i.quantity.value == 0) {
 //                                                    mutabletabs.remove(i)
                                                 } else {
-                                                    val index = meds.indexOfFirst { it.name == i.name }
+                                                    val index =
+                                                        meds.indexOfFirst { it.name == i.name }
                                                     meds[index].quantity.value--
-                                                    meds[index].totalprice.value = meds[index].price.toInt() * meds[index].quantity.value
+                                                    meds[index].totalprice.value =
+                                                        meds[index].price.toInt() * meds[index].quantity.value
 
 //                                                    i.quantity.value--
 
@@ -263,7 +266,8 @@ fun ViewCart(
 //                                                i.quantity.value++
                                                 val index = meds.indexOfFirst { it.name == i.name }
                                                 meds[index].quantity.value++
-                                                meds[index].totalprice.value = meds[index].price.toInt() * meds[index].quantity.value
+                                                meds[index].totalprice.value =
+                                                    meds[index].price.toInt() * meds[index].quantity.value
 
                                             }
                                     )
@@ -287,11 +291,11 @@ fun ViewCart(
                 }
             }
 
-
+            
 
             LaunchedEffect(key1 = shouldprescribe) {
 
-                val medicineList = mutabletabs.map {
+                 medicineList = mutabletabs2.map {
                     Medicine(
                         name = it.name,
                         mg = it.mg.toInt(),
@@ -300,7 +304,6 @@ fun ViewCart(
                 }
 
                 val am = AMedicines(medicineList)
-
                 if (shouldprescribe) {
 //                    toke =
 //                        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWMxZGNmYzA1NDAzMjZmMmM3YzdmMDMiLCJpYXQiOjE3MDc4MDk5MzUsImV4cCI6MTcwNzgyNzkzNX0.aMWXiDqET9tL3A4eauUTmLjP052tg7vv6gbbnkYiVxQ"
@@ -311,6 +314,7 @@ fun ViewCart(
             }
 
         }
+        
 
         Box(modifier = Modifier.offset(y = 0.dp))
         {
