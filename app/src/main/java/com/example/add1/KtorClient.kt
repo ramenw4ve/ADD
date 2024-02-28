@@ -61,7 +61,11 @@ class KtorClient {
         return request.body()
     }
 
-    suspend fun postMeds(end: String, medicines: AMedicines, accesstoken: String): String {
+    suspend fun postMeds(end: String, medicines: Postdocmeds, accesstoken: String): String {
+
+
+        val json = Json.encodeToString(medicines)
+        logger.info("POST request body: $json")
 
         val response = client.post("/doctor/addMedicines/$end") {
             header("Authorization", "Bearer $accesstoken")
@@ -80,7 +84,7 @@ class KtorClient {
             return "Added Successfully"
         }
     }
-    suspend fun postSelfMeds(end: String, medicines: AMedicines, accesstoken: String): String
+    suspend fun postSelfMeds(end: String, medicines: Postselfmeds, accesstoken: String): String
     {
         val json = Json.encodeToString(medicines)
         logger.info("POST request body: $json")
@@ -136,9 +140,19 @@ class KtorClient {
         return request.body()
     }
 
-    suspend fun getAllMeds(end: String): AllMed {
+    suspend fun getHPatient_(end: String, accesstoken: String): HPatient_ {
 
-        val request = client.get("/patient/$end")
+
+        val request = client.get("/patient/$end") {
+            header("Authorization", "Bearer $accesstoken")
+        }
+
+        return request.body()
+    }
+
+    suspend fun getAllMeds(): AllMed {
+
+        val request = client.get("/patient/medicines")
         return request.body()
     }
 
@@ -146,7 +160,7 @@ class KtorClient {
 
 
 
-        val request = client.get("/patient/viewDocPrescription/$end")
+        val request = client.get("/patient/$end")
 
         return request.body()
     }
@@ -260,6 +274,14 @@ data class HPatient(
     val _id:String
 )
 
+@Serializable
+data class HPatient_(
+    val prescribed_by: Int ,
+    val numberOfMedicines: Int = 69,
+    val Medicines: List<IMedicine>,
+    val _id:String
+)
+
 
 
 
@@ -271,8 +293,13 @@ data class SPatient(
 )
 
 @Serializable
-data class AMedicines(
+data class Postselfmeds(
     val medicines: List<Medicine>,
+)
+
+@Serializable
+data class Postdocmeds(
+    val medicines: List<Coffee>,
 )
 
 @Serializable
@@ -288,7 +315,7 @@ data class Medicine(
 )
 
 @Serializable
-data class Coffee(
+data class MutableCoffee(
     val name: MutableState<String>,
     val mg: MutableState<String>,
     val quantity: MutableState<String>,
@@ -297,8 +324,17 @@ data class Coffee(
 )
 
 @Serializable
+data class Coffee(
+    val name: String,
+    val mg: String,
+    val quantity: String,
+    val days: String,
+    val time: String
+)
+
+@Serializable
 data class ListCoffee(
-    val coffees: List<Coffee>
+    val mutableCoffees: List<MutableCoffee>
 )
 
 @Serializable

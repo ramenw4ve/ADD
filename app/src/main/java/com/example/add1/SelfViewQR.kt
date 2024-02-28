@@ -36,18 +36,18 @@ import kotlinx.coroutines.delay
 
 
 @Composable
-fun PatViewQR(toke:String) {
+fun SelfiewQR(toke:String) {
 
     val ktorClient = KtorClient()
 
 
     var patH by remember {
-        mutableStateOf<HPatient?>(null)
+        mutableStateOf<HPatient_?>(null)
     }
     var qr by remember {
         mutableStateOf<ViewQR?>(null)
     }
-    
+
     var tex by remember {
         mutableStateOf("")
     }
@@ -55,7 +55,7 @@ fun PatViewQR(toke:String) {
 //    var toke = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWFkMjBjNjMwODJmMWE1MjFiYzRjOWEiLCJpYXQiOjE3MDY5NDUzNjksImV4cCI6MTcwNjk0ODk2OX0.YjVx5aMrL8SzWaim4zD_o5rYADj5aGXJRC2vNmGYc1w"
 
     LaunchedEffect(key1 = Unit) {
-        patH = ktorClient.getHPatient("home", toke.toString())
+        patH = ktorClient.getHPatient_("home_", toke.toString())
 
     }
 
@@ -64,7 +64,7 @@ fun PatViewQR(toke:String) {
         val objid = patH?._id
 
         LaunchedEffect(key1 = Unit) {
-            qr = objid?.let { ktorClient.getQR("viewDocPrescription/$it") }
+            qr = objid?.let { ktorClient.getQR("viewSelfPrescription/$it") }
 
         }
     }
@@ -123,11 +123,11 @@ fun PatViewQR(toke:String) {
                 contentScale = ContentScale.FillBounds
             )
             var re = listOf(1,2,3)
-            Text("Doctor name: ${patH?.doctorName}"
-                ,modifier = Modifier.offset(y = -280.dp)
-            , fontSize = 22.sp,
-                fontFamily  =fontFamily,
-                fontWeight = FontWeight.SemiBold)
+//            Text("Doctor name: ${patH?.doctorName}"
+//                ,modifier = Modifier.offset(y = -280.dp)
+//                , fontSize = 22.sp,
+//                fontFamily  =fontFamily,
+//                fontWeight = FontWeight.SemiBold)
             Column(verticalArrangement = Arrangement.SpaceEvenly) {
 
 

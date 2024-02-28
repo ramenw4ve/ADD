@@ -1,6 +1,5 @@
 package com.example.add1
 
-import android.widget.Toast
 import androidx.compose.ui.Alignment
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -22,11 +21,13 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -43,13 +44,12 @@ import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddMed(patid: String?) {
+fun AddMed(patid: String?,toke:String) {
 
-//    val drinkNameState = remember { mutableStateOf("Default Drink") }
-//    val mgState = remember { mutableStateOf("0") }
-//    val quantityState = remember { mutableStateOf("0") }
-//    val daysState = remember { mutableStateOf("0") }
-//    val timeState = remember { mutableStateOf("Default Time") }
+
+
+    val ktorClient = KtorClient()
+
 
     var quantity by remember {
         mutableStateOf("")
@@ -65,13 +65,18 @@ fun AddMed(patid: String?) {
         mutableStateOf(false)
     }
 
-    var drinkslist by remember {
-        mutableStateOf( mutableStateListOf<Coffee>())
+    var shouldPrescribe by remember {
+        mutableStateOf(false)
     }
+
+    var mutablemedicinelist by remember {
+        mutableStateOf( mutableStateListOf<MutableCoffee>())
+    }
+    var medicineList:List<Coffee>
 
     if(shouldaddtolist)
     {
-        drinkslist.add(createNewCoffee())
+        mutablemedicinelist.add(createNewCoffee())
         shouldaddtolist = false
     }
 
@@ -99,6 +104,17 @@ fun AddMed(patid: String?) {
                 }) {
                     Text(text ="Add Medicine")
                 }
+
+                Button(onClick = {
+
+                    shouldPrescribe = true
+
+                },modifier = Modifier
+                    .offset(y = -70.dp)
+                    .width(175.dp)
+                    .height(50.dp)) {
+                    Text(text ="Prescribe")
+                }
             }
 
 
@@ -118,7 +134,7 @@ fun AddMed(patid: String?) {
             {
 
                 LazyColumn {
-                    items(drinkslist)
+                    items(mutablemedicinelist)
                     {
                         Box(//      Box for each frame
                             modifier = Modifier
@@ -148,13 +164,14 @@ fun AddMed(patid: String?) {
                                 {
                                     it.name.value = DropDown(
                                         modi = Modifier
-                                            .width(145.dp)
+                                            .width(140.dp)
                                             .padding(3.dp)
                                     )
                                     it.mg.value = MgDropDown(
                                         modi = Modifier
-                                            .width(97.dp)
-                                            .padding(3.dp)
+                                            .width(96.dp)
+                                            .padding(3.dp),it.name.value
+
                                     )
                                     OutlinedTextField(
                                         value = it.quantity.value, onValueChange = {newval ->
@@ -163,21 +180,23 @@ fun AddMed(patid: String?) {
                                         label = {
                                             Text(
                                                 text = "Quantity",
-                                                fontSize = 9.sp,
+                                                fontSize = 13.sp,
                                                 modifier = Modifier.offset(y = -7.dp)
                                             )
                                         },
                                         modifier = Modifier
                                             .padding(3.dp)
-                                            .width(100.dp)
+                                            .width(90.dp)
                                             .height(50.dp)
                                     )
                                 }
                                 Row(
                                     modifier = Modifier
+                                        .offset(y = -5.dp)
                                         .fillMaxWidth()
-                                        .padding(5.dp),
-                                    horizontalArrangement = Arrangement.SpaceEvenly
+                                        .padding(2.dp),
+                                    horizontalArrangement = Arrangement.SpaceEvenly,
+                                    verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     OutlinedTextField(
                                         value = it.days.value, onValueChange = {newval ->
@@ -193,7 +212,7 @@ fun AddMed(patid: String?) {
                                         modifier = Modifier
                                             .padding(3.dp)
                                             .width(70.dp)
-                                            .height(60.dp)
+                                            .height(50.dp)
                                     )
                                     OutlinedTextField(
                                         value = it.time.value, onValueChange = {newval ->
@@ -209,7 +228,7 @@ fun AddMed(patid: String?) {
                                         modifier = Modifier
                                             .padding(3.dp)
                                             .width(200.dp)
-                                            .height(60.dp)
+                                            .height(50.dp)
                                     )
                                 }
                             }
@@ -219,13 +238,27 @@ fun AddMed(patid: String?) {
                     }
                 }
 
+                LaunchedEffect(key1 = shouldPrescribe)
+                {
+                    medicineList = mutablemedicinelist.map {
+                        Coffee(it.name.value,
+                            it.mg.value,
+                            it.quantity.value,
+                            it.days.value,
+                            it.time.value
+                        )
+                    }
 
-//                LazyColumn {
-//                    items(drinkslist)
-//                    {
-//                        Text(it.name.value.toString())
-//                    }
-//                }
+                    val am = Postdocmeds(medicineList)
+                    if(shouldPrescribe)
+                    {
+                        var resp = ktorClient.postMeds("312471",am,toke)
+                    }
+                    shouldPrescribe = false
+
+
+                }
+
 
 
 
@@ -243,11 +276,19 @@ fun AddMed(patid: String?) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DropDown(modi: Modifier = Modifier): String {
-
+    val ktorClient = KtorClient()
+    var allMedicines by remember {
+        mutableStateOf<AllMed?>(null)
+    }
     val context = LocalContext.current
-    val coffeeDrinks = listOf("Americano", "Cappuccino", "Espresso", "Latte", "Mocha")
+    val coffeeDrinks = listOf("Dolo", "Augmentin 625", "Azithral 500", "Okacet", "Gelusil MPS","Survector","Dolo 500","Saridon","Zincovit")
     var expanded by remember { mutableStateOf(false) }
     var selectedText by remember { mutableStateOf(coffeeDrinks[0]) }
+
+    LaunchedEffect(key1 = Unit)
+    {
+        allMedicines = ktorClient.getAllMeds()
+    }
 
     Box(
         modifier = modi
@@ -265,20 +306,22 @@ fun DropDown(modi: Modifier = Modifier): String {
                 onValueChange = {},
                 readOnly = true,
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-                modifier = Modifier.menuAnchor()
+                modifier = Modifier.menuAnchor(),
+                textStyle = LocalTextStyle.current.copy(fontSize = 13.5.sp)
+
             )
 
             ExposedDropdownMenu(
                 expanded = expanded,
                 onDismissRequest = { expanded = false }
             ) {
-                coffeeDrinks.forEach { item ->
+                allMedicines?.listOfMed?.forEach { item ->
                     DropdownMenuItem(
-                        text = { Text(text = item) },
+                        text = { Text(text = item.medName, fontSize = 13.sp) },
                         onClick = {
-                            selectedText = item
+                            selectedText = item.medName
                             expanded = false
-                            Toast.makeText(context, item, Toast.LENGTH_SHORT).show()
+//                            Toast.makeText(context, item, Toast.LENGTH_SHORT).show()
                         }
                     )
                 }
@@ -290,12 +333,38 @@ fun DropDown(modi: Modifier = Modifier): String {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MgDropDown(modi: Modifier = Modifier): String {
+fun MgDropDown(modi: Modifier = Modifier, value: String): String {
+
+    val ktorClient = KtorClient()
+
+    var allMedicines by remember {
+        mutableStateOf<AllMed?>(null)
+    }
+    LaunchedEffect(key1 = Unit)
+    {
+        allMedicines = ktorClient.getAllMeds()
+    }
 
     val context = LocalContext.current
-    val coffeeDrinks = listOf("650", "500", "125", "100")
+    val coffeeDrinks = listOf("650", "625", "500", "10","600","100","550","50")
     var expanded by remember { mutableStateOf(false) }
-    var selectedText by remember { mutableStateOf(coffeeDrinks[0]) }
+    var selectedText by remember { mutableStateOf("-") }
+
+    val medicineMap: HashMap<String, MutableList<String>> = HashMap()
+
+    allMedicines?.listOfMed?.forEach{ medicine ->
+        val medName = medicine.medName
+        val medMg = medicine.medMg
+
+        if(medicineMap.containsKey(medName))
+        {
+            medicineMap[medName]?.add(medMg.toString())
+        }
+        else
+        {
+            medicineMap[medName] = mutableListOf(medMg.toString())
+        }
+    }
 
     Box(
         modifier = modi
@@ -312,20 +381,21 @@ fun MgDropDown(modi: Modifier = Modifier): String {
                 onValueChange = {},
                 readOnly = true,
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-                modifier = Modifier.menuAnchor()
+                modifier = Modifier.menuAnchor(),
+                textStyle = LocalTextStyle.current.copy(fontSize = 13.sp)
             )
 
             ExposedDropdownMenu(
                 expanded = expanded,
                 onDismissRequest = { expanded = false }
             ) {
-                coffeeDrinks.forEach { item ->
+                medicineMap[value]?.forEach { item ->
                     DropdownMenuItem(
                         text = { Text(text = item) },
                         onClick = {
                             selectedText = item
                             expanded = false
-//                            Toast.makeText(context, item, Toast.LENGTH_SHORT).show()
+            //                            Toast.makeText(context, item, Toast.LENGTH_SHORT).show()
                         }
                     )
                 }
@@ -338,8 +408,8 @@ fun MgDropDown(modi: Modifier = Modifier): String {
 
 
 @Composable
-fun createNewCoffee(): Coffee {
-    return Coffee(
+fun createNewCoffee(): MutableCoffee {
+    return MutableCoffee(
         remember { mutableStateOf("") },
         remember { mutableStateOf("") },
         remember { mutableStateOf("") },

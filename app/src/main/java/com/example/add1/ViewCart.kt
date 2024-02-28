@@ -9,13 +9,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -25,33 +22,30 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.Blue
-import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import com.example.add1.graphs.activescreen
+import com.example.add1.graphs.selfpscreen
 
 
 @Composable
 fun ViewCart(
     meds: List<Talbet>
-    ,toke: String
+    , toke: String, navController: NavHostController
 ) {
     var shouldprescribe by remember {
         mutableStateOf(false)
@@ -104,18 +98,11 @@ fun ViewCart(
         totalprice = remember { mutableStateOf(0) }
     )
 
-//    val meds = listOf(medicine1, medicine2, medicine3, medicine4, medicine5)
 
-
-//    var total by remember {
-//        mutableStateOf<Int>(0)
-//    }
 
     var total: Int = 0
 
-//    var allMed by remember {
-//        mutableStateOf<AllMed?>(null)
-//    }
+
 
     var allMed: AllMed? = null
 
@@ -130,16 +117,31 @@ fun ViewCart(
 
     val mutabletabs = meds.toMutableList()
 
-    for (i in meds) {
+
+//    val mutabletabs2 = mutableListOf<Talbet>()
+//    val mutabletabs2 = meds.toMutableStateList()
+
+    var mutabletabs2 by remember {
+        mutableStateOf( meds.toMutableStateList())
+    }
+
+    for (i in mutabletabs2) {
 
         total += i.totalprice.value
 
     }
-    val mutabletabs2 = mutableListOf<Talbet>()
 
-    for (i in meds) {
-        if (i.quantity.value != 0) {
-            mutabletabs2.add(i)
+//    for (i in meds) {
+//        if (i.quantity.value != 0) {
+//            mutabletabs2.add(i)
+//        }
+//    }
+
+    for(i in mutabletabs2.toList())
+    {
+        if(i.quantity.value == 0)
+        {
+            mutabletabs2.remove(i)
         }
     }
 
@@ -245,13 +247,15 @@ fun ViewCart(
                                                 if (i.quantity.value == 0) {
 //                                                    mutabletabs.remove(i)
                                                 } else {
-                                                    val index =
-                                                        meds.indexOfFirst { it.name == i.name }
-                                                    meds[index].quantity.value--
-                                                    meds[index].totalprice.value =
-                                                        meds[index].price.toInt() * meds[index].quantity.value
+//                                                    val index =
+//                                                        meds.indexOfFirst { it.name == i.name }
+//                                                    meds[index].quantity.value--
+//                                                    meds[index].totalprice.value =
+//                                                        meds[index].price.toInt() * meds[index].quantity.value
 
-//                                                    i.quantity.value--
+                                                    i.quantity.value--
+                                                    i.totalprice.value =
+                                                        i.price.toInt() * i.quantity.value
 
                                                 }
 
@@ -263,26 +267,29 @@ fun ViewCart(
                                         modifier = Modifier
                                             .offset(y = (0).dp)
                                             .clickable {
-//                                                i.quantity.value++
-                                                val index = meds.indexOfFirst { it.name == i.name }
-                                                meds[index].quantity.value++
-                                                meds[index].totalprice.value =
-                                                    meds[index].price.toInt() * meds[index].quantity.value
+                                                i.quantity.value++
+                                                i.totalprice.value =
+                                                    i.price.toInt() * i.quantity.value
+//                                                val index = meds.indexOfFirst { it.name == i.name }
+//                                                meds[index].quantity.value++
+//                                                meds[index].totalprice.value =
+//                                                    meds[index].price.toInt() * meds[index].quantity.value
 
                                             }
                                     )
                                 }
-                                val index = meds.indexOfFirst { it.name == i.name }
+//                                val index = meds.indexOfFirst { it.name == i.name }
                                 Text(
-                                    meds[index].quantity.value.toString(),
+//                                    meds[index].quantity.value.toString()
+                                    i.quantity.value.toString(),
                                     fontSize = 20.sp,
                                     fontFamily = fontFamily,
                                     color = Color(0xFFF1878A)
                                 )
 
                             }
-                            val index = meds.indexOfFirst { it.name == i.name }
-                            Text(text = "₹ " + meds[index].totalprice.value.toString(),
+//                            val index = meds.indexOfFirst { it.name == i.name }
+                            Text(text = "₹ " + i.totalprice.value.toString(),
                                 modifier = Modifier.offset(x = -15.dp,y = 50.dp))
 
                         }
@@ -303,7 +310,7 @@ fun ViewCart(
                     )
                 }
 
-                val am = AMedicines(medicineList)
+                val am = Postselfmeds(medicineList)
                 if (shouldprescribe) {
 //                    toke =
 //                        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWMxZGNmYzA1NDAzMjZmMmM3YzdmMDMiLCJpYXQiOjE3MDc4MDk5MzUsImV4cCI6MTcwNzgyNzkzNX0.aMWXiDqET9tL3A4eauUTmLjP052tg7vv6gbbnkYiVxQ"
@@ -312,6 +319,14 @@ fun ViewCart(
                 }
                 shouldprescribe = false
             }
+
+        }
+        Button(onClick = {
+
+            shouldprescribe = true
+
+        }) {
+            Text("Prescribe")
 
         }
         
@@ -330,7 +345,8 @@ fun ViewCart(
                   contentDescription = null,
                   contentScale = ContentScale.FillBounds,
                   modifier = Modifier.clickable {
-                      shouldprescribe = true
+                      navController.navigate(selfpscreen.viewselfqr.route)
+
                   }
               )
           }

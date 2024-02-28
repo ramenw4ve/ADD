@@ -9,7 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.example.add1.AddMed
-import com.example.add1.AddMedicine
+//import com.example.add1.AddMedicine
 import com.example.add1.Addppage
 import com.example.add1.BottomBarScreen
 import com.example.add1.DocHomepage
@@ -50,11 +50,11 @@ fun DHomeNavGraph(navController: NavHostController, token: String) {
         composable(route = BottomBarScreen.Profile.route) {
             DocProfile(token)
         }
-        addmNavGraph(navController = navController)
+        addmNavGraph(navController = navController,token)
     }
 }
 
-fun NavGraphBuilder.addmNavGraph(navController: NavHostController) {
+fun NavGraphBuilder.addmNavGraph(navController: NavHostController,token: String) {
     navigation(
         route = Graph.ADDM,
         startDestination = addmscreen.addmedi.route
@@ -75,7 +75,7 @@ fun NavGraphBuilder.addmNavGraph(navController: NavHostController) {
             )
         {
 
-            AddMed(it.arguments?.getString("patientId"))
+            AddMed(it.arguments?.getString("patientId"),token)
         }
     }
 }

@@ -9,7 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.add1.BottomBarScreen
 import com.example.add1.PatViewQR
-import com.example.add1.Tablet
+import com.example.add1.SelfiewQR
 import com.example.add1.Talbet
 import com.example.add1.User_home_page
 import com.example.add1.User_payment
@@ -64,7 +64,12 @@ fun NavGraphBuilder.selfpNavGraph(navController: NavHostController,token:String)
             }
 
             // Use the tabletList as needed in your ViewCart composable
-            ViewCart(tabletList, toke = token)
+            ViewCart(tabletList, toke = token,navController)
+        }
+        
+        composable(route = selfpscreen.viewselfqr.route)
+        {
+            SelfiewQR(toke = token)
         }
 
 
@@ -104,6 +109,7 @@ fun NavGraphBuilder.activepNavGraph(navController: NavHostController,token: Stri
     sealed class selfpscreen(val route: String) {
         object selfpre : selfpscreen(route = "SELFPRESCRIBE")
         object viewcart : selfpscreen(route = "VIEWCART")
+        object viewselfqr : selfpscreen(route = "VIEWSELFQR")
     }
 
     sealed class activescreen(val route: String) {

@@ -89,7 +89,7 @@ fun User_self_prescription(
     )
     val medicine5 = Talbet(
         name = "Zincovit",
-        mg = "550",
+        mg = "50",
         price = "25",
         quantity = remember { mutableStateOf(0)},
         totalprice = remember { mutableStateOf(0) }
