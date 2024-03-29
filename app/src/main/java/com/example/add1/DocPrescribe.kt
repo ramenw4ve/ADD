@@ -1,5 +1,6 @@
 package com.example.add1
 
+import android.widget.Toast
 import androidx.compose.ui.Alignment
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -49,7 +50,7 @@ fun AddMed(patid: String?,toke:String) {
 
 
     val ktorClient = KtorClient()
-
+    val context = LocalContext.current
 
     var quantity by remember {
         mutableStateOf("")
@@ -249,10 +250,12 @@ fun AddMed(patid: String?,toke:String) {
                         )
                     }
 
+
                     val am = Postdocmeds(medicineList)
                     if(shouldPrescribe)
                     {
                         var resp = ktorClient.postMeds("312471",am,toke)
+                        Toast.makeText(context, "Prescribed Succesfully", Toast.LENGTH_SHORT).show()
                     }
                     shouldPrescribe = false
 
@@ -344,14 +347,7 @@ fun MgDropDown(modi: Modifier = Modifier, value: String): String {
     {
         allMedicines = ktorClient.getAllMeds()
     }
-
-    val context = LocalContext.current
-    val coffeeDrinks = listOf("650", "625", "500", "10","600","100","550","50")
-    var expanded by remember { mutableStateOf(false) }
-    var selectedText by remember { mutableStateOf("-") }
-
     val medicineMap: HashMap<String, MutableList<String>> = HashMap()
-
     allMedicines?.listOfMed?.forEach{ medicine ->
         val medName = medicine.medName
         val medMg = medicine.medMg
@@ -365,6 +361,14 @@ fun MgDropDown(modi: Modifier = Modifier, value: String): String {
             medicineMap[medName] = mutableListOf(medMg.toString())
         }
     }
+    val context = LocalContext.current
+
+    var expanded by remember { mutableStateOf(false) }
+    var selectedText by remember(value) { mutableStateOf("-") }
+//    selectedText = "-"
+
+
+
 
     Box(
         modifier = modi
