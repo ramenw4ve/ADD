@@ -30,7 +30,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import android.util.Base64
 import android.graphics.BitmapFactory
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.size
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.asImageBitmap
 import kotlinx.coroutines.delay
 
@@ -116,7 +119,8 @@ fun SelfiewQR(toke:String) {
 
 
         Box (modifier = Modifier.offset(y = 0.dp),
-            contentAlignment = Alignment.Center){
+            contentAlignment = Alignment.Center)
+        {
             Image(
                 painter = painterResource(id = R.drawable.drectangle),
                 contentDescription = null,
@@ -137,7 +141,8 @@ fun SelfiewQR(toke:String) {
                         contentDescription = "Image from Base64",
                         modifier = Modifier
                             .size(220.dp)
-                            .offset(y = -50.dp)
+                            .offset(x = 10.dp,y = -50.dp)
+                            .border(border = BorderStroke(1.3.dp,Color.Black), shape = RectangleShape)
                     )
                 }
 

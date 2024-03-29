@@ -1,10 +1,14 @@
 package com.example.add1
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -71,8 +75,8 @@ val fontFamily = FontFamily(
     }
     Column {
         Text(
-            text = "PROFILE",
-            fontSize = 20.sp,
+            text = "",
+            fontSize = 24.sp,
             color = Color.Black,
             fontFamily = fontFamily, fontWeight = FontWeight.SemiBold,
             modifier = Modifier.padding(74.dp, 36.dp)
@@ -87,7 +91,8 @@ val fontFamily = FontFamily(
                     contentDescription = null,
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
-                        .size(100.dp),
+                        .size(100.dp)
+                        .offset(y = -50.dp),
                     contentScale = ContentScale.Fit
 
                 )
@@ -96,36 +101,46 @@ val fontFamily = FontFamily(
                         painter = painterResource(id = R.drawable.text_box_user_pp),
                         contentDescription = null,
                         modifier = Modifier
+                            .offset(y = -30.dp)
                             .clip(RoundedCornerShape(size = 35.dp))
-                            .padding(45.dp)
+                            .padding(35.dp)
                     )
-                    Text(
-                        text = "${patg?.name}",
-                        color = Color.Gray,
-                        fontSize = 16.sp,
-                        fontFamily = fontFamily, fontWeight = FontWeight.SemiBold,
-                        modifier = Modifier
-                            .align(Alignment.TopStart)
-                            .padding(65.dp)
-                    )
-                    Text(
-                        text = "USER'S ID: ${patg?.uniqueId}",
-                        color = Color.Gray,
-                        fontSize = 16.sp,
-                        fontFamily = fontFamily, fontWeight = FontWeight.SemiBold,
-                        modifier = Modifier
-                            .padding(65.dp)
-                            .align(Alignment.CenterStart)
-                    )
-                    Text(
-                        text = "PHONE NUMBER: ${patg?.phone_no}",
-                        color = Color.Gray,
-                        fontSize = 16.sp,
-                        fontFamily = fontFamily, fontWeight = FontWeight.SemiBold,
-                        modifier = Modifier
-                            .padding(65.dp)
-                            .align(Alignment.BottomStart)
-                    )
+                    Column(modifier = Modifier
+                        .offset(y=-40.dp)
+                        .height(250.dp)
+                        .padding(45.dp)
+//                        .background(Color.Cyan)
+                        ,
+                        verticalArrangement = Arrangement.SpaceEvenly) {
+                        Text(
+                            text = "Name: ${patg?.name}",
+                            color = Color.Gray,
+                            fontSize = 16.sp,
+                            fontFamily = fontFamily, fontWeight = FontWeight.SemiBold,
+                            modifier = Modifier
+//                            .align(Alignment.TopStart)
+                            .padding(top = 10.dp)
+                        )
+                        Text(
+                            text = "User Id: ${patg?.uniqueId}",
+                            color = Color.Gray,
+                            fontSize = 16.sp,
+                            fontFamily = fontFamily, fontWeight = FontWeight.SemiBold,
+                            modifier = Modifier
+                            .padding(top = 10.dp)
+//                            .align(Alignment.CenterStart)
+                        )
+                        Text(
+                            text = "Phone Number: ${patg?.phone_no}",
+                            color = Color.Gray,
+                            fontSize = 16.sp,
+                            fontFamily = fontFamily, fontWeight = FontWeight.SemiBold,
+                            modifier = Modifier
+                            .padding(top = 10.dp)
+//                            .align(Alignment.BottomStart)
+                        )
+                    }
+
                 }
 
             }

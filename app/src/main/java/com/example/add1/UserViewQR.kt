@@ -116,7 +116,8 @@ fun PatViewQR(toke:String) {
 
 
         Box (modifier = Modifier.offset(y = 0.dp),
-            contentAlignment = Alignment.Center){
+            contentAlignment = Alignment.Center)
+        {
             Image(
                 painter = painterResource(id = R.drawable.drectangle),
                 contentDescription = null,

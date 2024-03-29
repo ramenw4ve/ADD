@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,6 +18,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -45,15 +47,27 @@ import com.example.add1.graphs.Graph
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DocHomepage(
+fun DocHomepage(toke:String,
     navController: NavController,modifier:Modifier=Modifier
 ) {
     val fontFamily = FontFamily(
         Font(R.font.jost_semibold, FontWeight.SemiBold)
     )
 
+    val ktorClient = KtorClient()
+
     var patid by remember {
         mutableStateOf("")
+    }
+
+    var docH by remember {
+        mutableStateOf<HDoctor_?>(null)
+    }
+
+    LaunchedEffect(key1 = Unit) {
+
+        docH = ktorClient.getHDoctor_("home_", toke.toString())
+
     }
     Box(
         modifier = modifier.fillMaxSize()
@@ -66,70 +80,73 @@ fun DocHomepage(
             modifier = Modifier.fillMaxSize()
         )
     }
-//    Column {
-//
-//
-//        Box(modifier = Modifier.align(Alignment.CenterHorizontally))
-//        {
-//            Text(
-//                text = "Add Patient",
-//                fontSize = 24.sp,
-//                color = Color.Black,
-//                fontFamily = fontFamily, fontWeight = FontWeight.SemiBold,
-//                modifier = Modifier.padding(30.dp, top = 340.dp)
-//            )
-//            androidx.compose.foundation.Image(
-//                painter = painterResource(id = R.drawable.pink2), contentDescription = null,
-//                modifier = Modifier
-//                    .align(Alignment.BottomCenter)
-//                    .padding(top = 250.dp),
-//                contentScale = ContentScale.Fit
-//            )
-//            TextField(
-//                    value = patid,
-//            {
-//                patid = it
-//            },
-//            label = {
-//                Text(text = "Patient ID")
-//            },
-//            modifier = Modifier
-//                .align(Alignment.BottomCenter)
-//                .padding(bottom = 200.dp),
-//            shape = RoundedCornerShape(30),
-//            textStyle = TextStyle(
-//                textAlign = TextAlign.Center,
-//                fontSize = 20.sp,
-//                color = Color.Gray,
-//                fontFamily = fontFamily, fontWeight = FontWeight.SemiBold,
-//
-//
-//                )
-//            )
-//            Text(
-//                text = "+ ADD PATIENT",
-//                fontSize = 18.sp,
-//                color = Color.White,
-//                fontFamily = fontFamily, fontWeight = FontWeight.SemiBold,
-//                modifier = Modifier
-//                    .align(Alignment.BottomCenter)
-//                    .padding(bottom = 120.dp)
-//                    .clickable {
-//                        navController.navigate(BottomBarScreen.SelfP.route + "/$patid")
-//                        patid = ""
-//                    }
-//
-//            )
-//
-//
-//
-//
-//
-//        }
-//
-//
-//
-//
-//
-//    }
+    Column(modifier = Modifier.fillMaxWidth())
+    {
+
+
+        Text(
+            text = "Latest Prescription",
+            modifier = Modifier.offset(x=85.dp,y=250.dp),
+
+            fontSize = 24.sp,
+            fontFamily = fontFamily,
+            fontWeight = FontWeight.SemiBold
+        )
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .offset(y = (200).dp),
+            contentAlignment = Alignment.Center
+        )
+        {
+            Image(
+                painter = painterResource(id = R.drawable.greenthing),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+
+                )
+
+            Column(
+                modifier = Modifier
+                    .padding(end = 0.dp, bottom = 0.dp)
+                    .offset(x = -30.dp)
+            ) {
+
+                Text(
+                    text = "Patient Name: ${docH?.patientName}",
+                    color = Color.White,
+                    fontSize = 22.sp,
+                    fontFamily = fontFamily,
+                    fontWeight = FontWeight.SemiBold,
+                    modifier = Modifier
+                        .offset(x = 34.dp, y = -39.dp)
+                )
+                Column(modifier = Modifier.offset(y = -15.dp)) {
+
+                    Text(
+                        text = "Patient ID: ${docH?.patientId}",
+                        color = Color.White,
+                        fontSize = 17.sp,
+                        fontFamily = fontFamily,
+                        fontWeight = FontWeight.SemiBold
+
+                    )
+
+
+                    Text(
+                        text = "Number of Medicines: ${docH?.numberOfMedicines}",
+                        color = Color.White,
+                        fontSize = 17.sp,
+                        fontFamily = fontFamily,
+                        fontWeight = FontWeight.SemiBold
+
+                    )
+                }
+
+
+            }
+        }
+    }
+
 }

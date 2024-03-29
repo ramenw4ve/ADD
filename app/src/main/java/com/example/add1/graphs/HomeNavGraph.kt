@@ -59,7 +59,7 @@ fun NavGraphBuilder.selfpNavGraph(navController: NavHostController,token:String)
 
                     )
                 } else {
-                    Talbet("deault", "", mutableStateOf(0),"", mutableStateOf(0))
+                    Talbet("default", "", mutableStateOf(0),"", mutableStateOf(0))
                 }
             }
 

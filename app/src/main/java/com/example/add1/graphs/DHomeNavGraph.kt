@@ -27,7 +27,7 @@ fun DHomeNavGraph(navController: NavHostController, token: String) {
         startDestination = BottomBarScreen.Home.route
     ) {
         composable(route = BottomBarScreen.Home.route) {
-            DocHomepage(navController)
+            DocHomepage(token,navController)
         }
 //        composable(route = "${BottomBarScreen.Addm.route}/{patid}") { backStackEntry ->
 //            val patid = backStackEntry.arguments?.getInt("patid") ?: 5
