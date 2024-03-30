@@ -37,7 +37,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.add1.graphs.DocScreen
 import com.example.add1.graphs.Graph
+import com.example.add1.graphs.Patscreen
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -309,7 +311,7 @@ fun Doc_signup(navController: NavHostController) {
             }
 
 
-            Row(modifier = Modifier.offset(y = -55.dp)) {
+            Row(modifier = Modifier.offset(x=120.dp,y = 50.dp)) {
                 Text(
                     text = "Already have one?",
                     color = Color(0xFF7D7D7D),
@@ -323,7 +325,10 @@ fun Doc_signup(navController: NavHostController) {
                     fontFamily = fontFamily,
                     fontWeight = FontWeight.Bold,
                     color = Color(0xFF509B92),
-                    modifier = Modifier.clickable { }
+                    modifier = Modifier.clickable {
+
+                        navController.navigate((DocScreen.SignIn.route))
+                    }
                 )
 
 

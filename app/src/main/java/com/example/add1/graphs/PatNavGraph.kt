@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.add1.User_home_page
+import com.example.add1.User_signin
 import com.example.add1.User_signup
 
 
@@ -23,6 +24,9 @@ fun NavGraphBuilder.PatNavGraph(navController: NavHostController) {
         composable(route = Patscreen.SignUp.route) {
             User_signup(navController)
         }
+        composable(route = Patscreen.SignIn.route) {
+            User_signin(navController)
+        }
 
 
 
@@ -34,5 +38,6 @@ sealed class Patscreen(val route: String) {
     object Choose : Patscreen(route = "LOGINAS")
     object Home : Patscreen(route = "PHOME")
     object SignUp : Patscreen(route = "PSIGN_UP")
+    object SignIn : Patscreen(route = "PSIGN_IN")
     object Forgot : Patscreen(route = "FORGOT")
 }

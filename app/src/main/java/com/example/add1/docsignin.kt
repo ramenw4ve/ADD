@@ -37,7 +37,7 @@ import androidx.navigation.NavHostController
 import com.example.add1.graphs.Graph
 
 @Composable
-fun User_signin(navController: NavHostController) {
+fun Doc_signin(navController: NavHostController) {
 
     val ktorClient = KtorClient()
 
@@ -115,53 +115,53 @@ fun User_signin(navController: NavHostController) {
         Column(verticalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.height(140.dp)) {
 
-        OutlinedTextField(
-            value = unid, {
-                unid = it
-            },
-            shape = RoundedCornerShape(16.dp),
-            label = {
-                Text(
-                    text = "Enter UID",
-                    color = Color(0xFF7E7B7B),
-                    fontSize = 15.sp,
-                    fontFamily = fontFamily2,
-                    fontWeight = FontWeight.SemiBold,
+            OutlinedTextField(
+                value = unid, {
+                    unid = it
+                },
+                shape = RoundedCornerShape(16.dp),
+                label = {
+                    Text(
+                        text = "Enter Doc UID",
+                        color = Color(0xFF7E7B7B),
+                        fontSize = 15.sp,
+                        fontFamily = fontFamily2,
+                        fontWeight = FontWeight.SemiBold,
 
+                        )
+                },modifier = Modifier
+                    .width(350.dp)
+                    .height(65.dp),
+                colors = OutlinedTextFieldDefaults.colors(
+                    unfocusedBorderColor = Color(0xFFBFBFBF)
                 )
-            },modifier = Modifier
-                .width(350.dp)
-                .height(65.dp),
-            colors = OutlinedTextFieldDefaults.colors(
-                unfocusedBorderColor = Color(0xFFBFBFBF)
+
+
             )
 
 
-        )
+            OutlinedTextField(
+                value = pw, {
+                    pw = it
+                },
+                shape = RoundedCornerShape(16.dp),
+                label = {
+                    Text(
+                        text = "Enter Password",
+                        color = Color(0xFF7E7B7B),
+                        fontSize = 15.sp,
+                        fontFamily = fontFamily2,
+                        fontWeight = FontWeight.SemiBold,
 
-
-        OutlinedTextField(
-            value = pw, {
-                pw = it
-            },
-            shape = RoundedCornerShape(16.dp),
-            label = {
-                Text(
-                    text = "Enter Password",
-                    color = Color(0xFF7E7B7B),
-                    fontSize = 15.sp,
-                    fontFamily = fontFamily2,
-                    fontWeight = FontWeight.SemiBold,
-
+                        )
+                },modifier = Modifier
+                    .width(350.dp)
+                    .height(65.dp),
+                colors = OutlinedTextFieldDefaults.colors(
+                    unfocusedBorderColor = Color(0xFFBFBFBF)
                 )
-            },modifier = Modifier
-                .width(350.dp)
-                .height(65.dp),
-            colors = OutlinedTextFieldDefaults.colors(
-                unfocusedBorderColor = Color(0xFFBFBFBF)
-            )
 
-        )
+            )
         }
 
 
@@ -185,9 +185,9 @@ fun User_signin(navController: NavHostController) {
         }
         LaunchedEffect(key1 = shouldTriggerSignin) {
             if (shouldTriggerSignin) {
-                toke = ktorClient.postLPatient("login", LPatient(unid, pw)).toString()
+                toke = ktorClient.postLDoctor("login", LDoctor(unid, pw)).toString()
 
-                navController.navigate((Graph.PHOME)+"/$toke")
+                navController.navigate((Graph.DHOME)+"/$toke")
 
 
                 shouldTriggerSignin = false

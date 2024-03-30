@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.add1.graphs.Graph
+import com.example.add1.graphs.Patscreen
 
 //import com.example.add1.patient.graphs.Graph
 
@@ -237,10 +238,10 @@ fun User_signup(navController: NavHostController) {
                 }
                 LaunchedEffect(key1 = shouldTriggerSignup) {
                     if (shouldTriggerSignup) {
-//                        patient = ktorClient.postPatient("signup", Patient(name, phno, pw))
-//                        toke = ktorClient.postLPatient("login", LPatient(patient.toString(), pw)).toString()
+                        patient = ktorClient.postPatient("signup", Patient(name, phno, pw))
+                        toke = ktorClient.postLPatient("login", LPatient(patient.toString(), pw)).toString()
 
-                        toke = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWMxZGNmYzA1NDAzMjZmMmM3YzdmMDMiLCJpYXQiOjE3MTE3MjM2NTEsImV4cCI6MTcxMTc0MTY1MX0.kEp7PcqzMYxvfD0BAwM6i7nxEQIQHyPN8lzuOxMg05Y"
+//                        toke = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWMxZGNmYzA1NDAzMjZmMmM3YzdmMDMiLCJpYXQiOjE3MTE3MjM2NTEsImV4cCI6MTcxMTc0MTY1MX0.kEp7PcqzMYxvfD0BAwM6i7nxEQIQHyPN8lzuOxMg05Y"
 
 
 
@@ -284,7 +285,9 @@ fun User_signup(navController: NavHostController) {
                         fontFamily = fontFamily,
                         fontWeight = FontWeight.Bold,
                         color = Color(0xFF509B92),
-                        modifier = Modifier.clickable { }
+                        modifier = Modifier.clickable {
+                            navController.navigate((Patscreen.SignIn.route))
+                        }
                     )
 
 

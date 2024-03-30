@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.example.add1.Doc_signin
 import com.example.add1.Doc_signup
 
 //import com.example.add1.DocHome
@@ -25,9 +26,9 @@ fun NavGraphBuilder.DocNavGraph(navController: NavHostController) {
         composable(route = DocScreen.SignUp.route) {
             Doc_signup(navController)
         }
-//        composable(route = DocScreen.Home.route) {
-////            DocHome()
-//        }
+        composable(route = DocScreen.SignIn.route) {
+            Doc_signin(navController)
+        }
 
 
     }
@@ -37,5 +38,6 @@ sealed class DocScreen(val route: String) {
     object Choose : DocScreen(route = "LOGINAS")
     object Home : DocScreen(route = "DHOME")
     object SignUp : DocScreen(route = "DSIGN_UP")
+    object SignIn : Patscreen(route = "DSIGN_IN")
     object Forgot : DocScreen(route = "FORGOT")
 }

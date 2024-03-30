@@ -137,6 +137,7 @@ class KtorClient {
             header("Authorization", "Bearer $accesstoken")
         }
 
+
         return request.body()
     }
 
@@ -236,6 +237,30 @@ class KtorClient {
 
     }
 
+    suspend fun postLDoctor(end: String, doc: LDoctor): String? {
+
+
+        val response = client.post("doctor/$end") {
+            contentType(ContentType.Application.Json)
+            setBody(doc)
+        }
+
+        if (response.status == HttpStatusCode(200, "OK")) {
+            val parsedResponse: Map<String, String> = Json.decodeFromString(response.body())
+            val token = parsedResponse["token"]
+
+            return token
+        } else {
+            val parsedResponse: Map<String, String> = Json.decodeFromString(response.body())
+            val uniqueIdNumber = parsedResponse["error"]
+
+            return uniqueIdNumber.toString()
+
+        }
+
+
+    }
+
 
 }
 
@@ -270,6 +295,13 @@ data class LPatient(
     )
 
 @Serializable
+data class LDoctor(
+    val registrationNumber: String = "",
+    val password: String,
+
+    )
+
+@Serializable
 data class GPatient(
     val name: String,
     val uniqueId: Int,
@@ -281,7 +313,8 @@ data class HPatient(
     val doctorName: String = "Doctor0",
     val numberOfMedicines: Int = 69,
     val Medicines: List<IMedicine>,
-    val _id:String
+    val _id:String,
+    val message: String = ""
 )
 
 @Serializable

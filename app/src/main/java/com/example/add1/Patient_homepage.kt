@@ -86,74 +86,83 @@ fun User_home_page(toke: String,navController: NavHostController) {
                     fontFamily = fontFamily,
                     fontWeight = FontWeight.SemiBold
                 )
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.CenterHorizontally)
-                        .offset(y = (-80).dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.greenthing),
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
-
-                        )
-
-                    Column(
+                if (patH?.message != "No prescription prescribed yet.")
+                {
+                    Box(
                         modifier = Modifier
-                            .padding(end = 0.dp, bottom = 0.dp)
-                            .offset(x = -30.dp)
-                    ) {
+                            .fillMaxWidth()
+                            .align(Alignment.CenterHorizontally)
+                            .offset(y = (-80).dp),
+                        contentAlignment = Alignment.Center
+                    )
+                    {
+                        Image(
+                            painter = painterResource(id = R.drawable.greenthing),
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop,
 
-                        Text(
-                            text = "Doctor: ${patH?.doctorName}",
-                            color = Color.White,
-                            fontSize = 22.sp,
-                            fontFamily = fontFamily,
-                            fontWeight = FontWeight.SemiBold,
+                            )
+
+                        Column(
                             modifier = Modifier
-                                .offset(x = 14.dp,y = -38.dp)
-                        )
-                        Column(modifier = Modifier.offset(y=-15.dp)) {
-                            Text(
-                                text = "Hospital Name: ",
-                                color = Color.White,
-                                fontSize = 15.sp,
-                                fontFamily = fontFamily,
-                                fontWeight = FontWeight.SemiBold
+                                .padding(end = 0.dp, bottom = 0.dp)
+                                .offset(x = -30.dp)
+                        ) {
 
-                            )
                             Text(
-                                text = "Number of Items: ${patH?.numberOfMedicines}",
+                                text = "Doctor: ${patH?.doctorName}",
                                 color = Color.White,
-                                fontSize = 15.sp,
+                                fontSize = 22.sp,
                                 fontFamily = fontFamily,
-                                fontWeight = FontWeight.SemiBold
-
+                                fontWeight = FontWeight.SemiBold,
+                                modifier = Modifier
+                                    .offset(x = 14.dp,y = -38.dp)
                             )
+                            Column(modifier = Modifier.offset(y=-15.dp)) {
+                                Text(
+                                    text = "Hospital Name: ",
+                                    color = Color.White,
+                                    fontSize = 15.sp,
+                                    fontFamily = fontFamily,
+                                    fontWeight = FontWeight.SemiBold
+
+                                )
+                                Text(
+                                    text = "Number of Items: ${patH?.numberOfMedicines}",
+                                    color = Color.White,
+                                    fontSize = 15.sp,
+                                    fontFamily = fontFamily,
+                                    fontWeight = FontWeight.SemiBold
+
+                                )
+                            }
+
+
                         }
 
 
+
+                        Text(
+                            text = "VIEW MEDICINE",
+                            color = Color.White,
+                            fontSize = 20.sp,
+                            fontFamily = fontFamily,
+                            fontWeight = FontWeight.SemiBold,
+                            modifier = Modifier
+                                .padding(top = 155.dp)
+                                .clickable {
+                                    navController.navigate(activescreen.viewactive.route)
+                                }
+                        )
+
+
                     }
-
-
-
-                    Text(
-                        text = "VIEW MEDICINE",
-                        color = Color.White,
-                        fontSize = 20.sp,
-                        fontFamily = fontFamily,
-                        fontWeight = FontWeight.SemiBold,
-                        modifier = Modifier
-                            .padding(top = 155.dp)
-                            .clickable {
-                                navController.navigate(activescreen.viewactive.route)
-                            }
-                    )
-
-
                 }
+                else
+                {
+                    Text(text = "No prescription prescribed yet.")
+                }
+
 
             }
 
