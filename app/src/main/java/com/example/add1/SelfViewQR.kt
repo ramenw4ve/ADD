@@ -30,11 +30,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import android.util.Base64
 import android.graphics.BitmapFactory
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.size
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import kotlinx.coroutines.delay
 
 
@@ -42,6 +44,7 @@ import kotlinx.coroutines.delay
 fun SelfiewQR(toke:String) {
 
     val ktorClient = KtorClient()
+    val context = LocalContext.current
 
 
     var patH by remember {
@@ -144,6 +147,8 @@ fun SelfiewQR(toke:String) {
                             .offset(x = 10.dp,y = -50.dp)
                             .border(border = BorderStroke(1.3.dp,Color.Black), shape = RectangleShape)
                     )
+
+                    Toast.makeText(context, "Payment Successful", Toast.LENGTH_SHORT).show()
                 }
 
 //            LazyColumn(modifier  = Modifier.offset(y = 80.dp)) {

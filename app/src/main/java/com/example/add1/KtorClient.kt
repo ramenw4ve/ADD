@@ -322,7 +322,7 @@ data class HPatient(
 data class HPatient_(
     val prescribed_by: Int ,
     val numberOfMedicines: Int = 69,
-    val Medicines: List<IMedicine>,
+    val Medicines: List<SMedicine>,
     val _id:String
 )
 
@@ -402,6 +402,14 @@ data class IMedicine(
     val quantity: Int,
     val days: String,
     val time: String,
+    val price: Int,
+    val _id:String
+)
+@Serializable
+data class SMedicine(
+    val Medicine_name: String,
+    val mg: Int,
+    val quantity: Int,
     val price: Int,
     val _id:String
 )
