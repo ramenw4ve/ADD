@@ -24,7 +24,7 @@ import okhttp3.internal.concurrent.TaskRunner.Companion.logger
 
 class KtorClient {
     private val client = HttpClient(OkHttp) {
-        defaultRequest { url("http://192.168.0.101:7000/") }
+        defaultRequest { url("http://192.168.29.184:7000/") }
 
         install(Logging) {
             logger = Logger.SIMPLE
@@ -314,6 +314,7 @@ data class HPatient(
     val numberOfMedicines: Int = 69,
     val Medicines: List<IMedicine>,
     val _id:String,
+    val date: String,
     val message: String = ""
 )
 
@@ -399,6 +400,8 @@ data class IMedicine(
     val Medicine_name: String,
     val mg: Int,
     val quantity: Int,
+    val days: String,
+    val time: String,
     val price: Int,
     val _id:String
 )

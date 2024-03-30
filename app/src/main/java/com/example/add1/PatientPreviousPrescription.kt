@@ -127,6 +127,16 @@ fun User_prescriptions(navController: NavHostController,toke:String) {
                                 fontSize = 18.sp,
                                 fontFamily = fontFamily, fontWeight = FontWeight.SemiBold
                             )
+                            Text(
+                                text = "Days: ${med.days}",
+                                fontSize = 18.sp,
+                                fontFamily = fontFamily, fontWeight = FontWeight.SemiBold
+                            )
+                            Text(
+                                text = "Time: ${med.time}",
+                                fontSize = 18.sp,
+                                fontFamily = fontFamily, fontWeight = FontWeight.SemiBold
+                            )
 
                             Spacer(modifier = Modifier.height(20.dp))
                         }

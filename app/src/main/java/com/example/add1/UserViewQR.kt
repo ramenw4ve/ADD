@@ -167,7 +167,17 @@ fun PatViewQR(toke:String) {
                                 fontFamily = fontFamily, fontWeight = FontWeight.SemiBold
                             )
                             Text(
-                                text = "quantity: ${med.quantity}",
+                                text = "Quantity: ${med.quantity}",
+                                fontSize = 18.sp,
+                                fontFamily = fontFamily, fontWeight = FontWeight.SemiBold
+                            )
+                            Text(
+                                text = "Days: ${med.days}",
+                                fontSize = 18.sp,
+                                fontFamily = fontFamily, fontWeight = FontWeight.SemiBold
+                            )
+                            Text(
+                                text = "Time: ${med.time}",
                                 fontSize = 18.sp,
                                 fontFamily = fontFamily, fontWeight = FontWeight.SemiBold
                             )

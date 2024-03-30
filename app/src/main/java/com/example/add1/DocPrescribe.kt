@@ -333,7 +333,7 @@ fun DropDown(modi: Modifier = Modifier): String {
                         onClick = {
                             selectedText = item.medName
                             expanded = false
-//                            Toast.makeText(context, item, Toast.LENGTH_SHORT).show()
+//                            9
                         }
                     )
                 }
